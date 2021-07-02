@@ -1,3 +1,7 @@
+## StudyCafe Reservation System
+
+해당 프로젝트는 Webgrus 35 team 스터디카페 예약 시스템을 만들기 위한 내용을 담고있습니다.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
