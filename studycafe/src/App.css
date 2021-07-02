@@ -1,0 +1,17 @@
+.App {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding : 1rem 2rem;
+  background: #3b5998;  /*set background color*/
+  display : flex; /*양옆으로 배열*/
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+}
+
+.header h1 {
+  color: #fff
+}
