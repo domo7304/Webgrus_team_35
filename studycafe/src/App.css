@@ -4,10 +4,9 @@
 }
 
 .header {
-  padding: 1rem 2rem;
-  background: #3b5998;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding: 10px 0;
+  font-size: 20px;
+  background-color: #3d414c;
   text-align: center;
+  color: #fff;
 }
