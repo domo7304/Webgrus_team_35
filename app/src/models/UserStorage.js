@@ -22,6 +22,17 @@ class UserStorage {
     }, {});
     return newUsers;
   }
+
+  static getUserById(id){
+    const users = this.#users;
+    const idx = users.id.indexOf(id); // 매개변수로 입력받은 id가 users의 id 배열 중 몇 번째인지 인덱스를 return
+    const usersKeys = Object.keys(users); // users 객체가 가지는 key값들을 배열로 return
+    const user = usersKeys.reduce((newUsers, key) => {
+      newUsers[key] = users[key][idx]; // users 객체에서 key에 해당하는 애들 중 idx번째 값을 newUser의 key로 저장
+      return newUsers;
+    }, {});
+    return user;
+  }
 }
 
 module.exports = UserStorage;
