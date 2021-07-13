@@ -4,7 +4,7 @@ class UserStorage {
   // 클래스 안의 변수는 const 와 같은 표현이 필요x
   // 클래스에서 직접 users에 접근하기 위해 static 선언
   // # 의 역할이 private 과 같은 건가..?
-  static #users = {
+  static #users = { // 여기 더 해줄 것
     id : ["1111", "2222", "3333"],
     password : ["1111", "2222", "3333"],
     name : ["user1", "user2", "user3"],
