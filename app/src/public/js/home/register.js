@@ -9,11 +9,14 @@ const id = document.querySelector("#id"),
 registerBtn.addEventListener("click", register);
 
 function register(){
+  // id입력, 비밀번호/비밀번호 확인 일치 체크
+  if (!id.value) return alert("아이디를 입력해주세요.");
+  if (password.value !== confirmPassword.value) return alert("비밀번호가 일치하지 않습니다.");
+
   const req = {
     id: id.value,
     name: name.value,
     password: password.value,
-    passwordConfirm: confirmPassword.value,
   };
   
   // fetch를 통해 입력받은 id, pw를 서버로 전달
