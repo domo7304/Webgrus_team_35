@@ -17,9 +17,12 @@ const output = {
 
 // 로그인 기능을 위한 API를 process 객체로 묶어주기 
 const process = {
-  login : (req, res) => {
+  login : async(req, res) => {
     const user = new User(req.body);
-    const response = user.login();
+    // UserStorage.getUserById() -> user.login() 과정에서 async, await 이므로, 얘로 async, await 처리
+    // await 처리를 해주지 않으면 user.login()으로부터 success, msg 등을 return받기 전에 response를 보내버려서 
+    // login.js 의 then(res) 부분에서 success, msg 모두 undefined 이므로 alert(res.msg); 에 의해 undefined 출력
+    const response = await user.login(); 
     return res.json(response);
   },
   register : (req, res) => {
