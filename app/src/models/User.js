@@ -26,10 +26,14 @@ class User{
   }
 
   // User 모델에서는 넘겨받은 body를 UserStorage로 던져주기만 하고, 실제 기능은 UserStorage에서 구현할 예정
-  register() {
+  async register() {
     const client = this.body;
-    const response = UserStorage.save(client);
-    return response;
+    try {
+      const response = await UserStorage.save(client);
+      return response;
+    } catch (err) {
+      return { success: false, msg: err };
+    }
   }
 }
 
