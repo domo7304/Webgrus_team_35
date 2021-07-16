@@ -48,7 +48,7 @@ const InfoSection = ({
                         duration={500}
                         spy={true}
                         exact="true"
-                        offset={-80}
+                        
                         primary={primary ? 1 : 0}
                         dark={dark ? 1 : 0}
                         dark2={dark2 ? 1 : 0}

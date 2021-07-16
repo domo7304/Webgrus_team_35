@@ -5,12 +5,12 @@ import {Link as LinkS } from 'react-scroll' // 반응스크롤 npm install react
 export const Nav = styled.nav`
     background: #000;
     height: 80px;
-    //margin-top: -80px;
+    margin-top: -80px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 1rem;
-    postion: sticky;
+    position: sticky;
     top: 0;
     z-index: 10;
     

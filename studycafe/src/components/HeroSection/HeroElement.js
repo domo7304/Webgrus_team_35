@@ -31,7 +31,7 @@ export const HeroContainer = styled.div`
 `;
 
 export const HeroBg = styled.div`
-    position: absoulute;
+    position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
@@ -44,7 +44,7 @@ export const HeroBg = styled.div`
 export const VideoBg = styled.video`
     width: 100%;
     height: 100%;
-    //-o-object-fit: cover;
+    -o-object-fit: cover;
     object-fit: cover;
     background: #232a34;
 
