@@ -54,7 +54,7 @@ app.use(express.urlencoded({ extended: true }));//배열과 같은 것들을 받
 
 app.use("/member", require("./routes/memberRouter"));//require과 같은 라우터를 사용하기 위한 url은 /member이다.
 app.use("/board", require("./routes/boardRouter"));//바로 위 코드와 같은 양식
-app.use("/booking", require("./routes/bookingRouter"));
+app.use("/book", require("./routes/bookingRouter"));
 
 const interval = 3000;  //reload 시간간격.
 app.listen(8080, () => {

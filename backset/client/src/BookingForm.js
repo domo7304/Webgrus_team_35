@@ -10,7 +10,7 @@ import axios from 'axios';
 function BookingForm() {         
   const [SeatDetail, setSeatDetail] = useState([])
     useEffect(() => {
-    axios.get('http://localhost:8080/showSeats')   //정보를 저장하는걸 한번 해보자.
+    axios.get('http://localhost:8080/book/showSeats')   //정보를 저장하는걸 한번 해보자.
       .then(response => {  
         if(response.data.success){
             setSeatDetail(response.data.docs)
@@ -37,7 +37,7 @@ const renderCards= SeatDetail.map((seat,index)=>{
             params.append('userId', "hyunsik");
             params.append('addTime', addTime2);
             
-               axios.post('http://localhost:8080/booking', params)   
+               axios.post('http://localhost:8080/book/booking', params)   
                .then(response => {  
                  if(response.data.success){
                      alert('좌석예약이 완료되었습니다.')
