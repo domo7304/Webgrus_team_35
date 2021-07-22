@@ -3,6 +3,21 @@
 const User = require("../models/User");
 
 const auth = (req, res) => { 
+  const token = req.cookies.x_auth;
+
+  // 토큰을 복호화한 후 user를 찾기
+  User.findByToken(token, (err, user) => {
+    if (err) throw err;
+    // 복호화한 토큰으로 user를 찾지 못했다면 client에게 isAuth, error 라는 json 전달
+    if (!user) return res.json({
+        isAuth: false,
+        error: true
+    });
+    // token과 user정보를 넘겨주기 
+    req.token = token;
+    req.user = user;
+  });
+
   // DB로부터 가져온 user정보 중 client가 필요로하는 정보만 json으로 전달해주면 됨
   // 백엔드 코드 병합 시 어떤 정보가 필요할지 물어보기
   res.status(200).json({
@@ -16,6 +31,22 @@ const auth = (req, res) => {
 };
 
 const logout = (req, res) => {
+  const token = req.cookies.x_auth;
+
+  // 토큰을 복호화한 후 user를 찾기
+  User.findByToken(token, (err, user) => {
+    if (err) throw err;
+    // 복호화한 토큰으로 user를 찾지 못했다면 client에게 isAuth, error 라는 json 전달
+    if (!user) return res.json({
+        isAuth: false,
+        error: true
+    });
+    // token과 user정보를 넘겨주기 
+    req.token = token;
+    req.user = user;
+    console.log(req);
+  });
+
   User.findOneAndUpdate({ _id: req.user._id}, { token: ""}, (err, user) => {
     if (err) return res.json({
       success: false,

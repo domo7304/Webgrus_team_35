@@ -3,7 +3,7 @@
 const express = require('express');
 const app = express();
 
-const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser'); // 쿠키 핸들링 미들웨어
 const routes = require("./src/routes"); // 라우터 경로
 const config = require('./src/config/key'); // DB설정
 const mongoose = require('mongoose');
@@ -16,10 +16,10 @@ mongoose.connect(config.mongoURI, {
 .then(() => console.log('mongoDB connected!'))
 .catch(err => console.log(err));
 
+// 미들웨어 등록
 app.use(express.json());  
 app.use(express.urlencoded({extended: true})); 
 app.use(cookieParser());
-// 모든 요청은 routes로 넘어가게됨
 app.use("/", routes); 
 
 module.exports = app;
