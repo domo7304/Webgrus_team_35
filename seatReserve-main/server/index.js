@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require('cors');
 const bodyParser = require("body-parser");
-const api = require('./routes/Router');
+const api = require('./routes/bookingRouter');
 
 const mongodb = require("mongodb");
 const MongoClient = mongodb.MongoClient;
@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use('/api', api);  //라우팅을 여기서. /api로 요청시 Router파일로보낸다.
 
 
-const port = process.env.PORT || 8020 //포트번호 설정.
+const port = process.env.PORT || 8080 //포트번호 설정.
 const interval = 3000;  //시간간격.
 
 app.listen(port, () => {
