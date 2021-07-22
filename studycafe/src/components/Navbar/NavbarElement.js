@@ -3,7 +3,7 @@ import {Link as LinkR } from 'react-router-dom' // 일반 링크 (다른페이�
 import {Link as LinkS } from 'react-scroll' // 반응스크롤 npm install react-scroll
 
 export const Nav = styled.nav`
-    background: #000;
+    background: ${({scrolNav}) => (scrolNav ? '#01010b' : '#01010b')};
     height: 80px;
     //margin-top: -80px;
     display: flex;

@@ -12,7 +12,7 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-
+import { Container1, FormWrap, Icon, Wrap } from "./signElement";
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
@@ -37,6 +37,9 @@ export default function SignUp() {
     const classes = useStyles();
 
     return (
+        <Container1>
+        
+        <Icon to="/">Study Joa</Icon>
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
@@ -190,5 +193,6 @@ export default function SignUp() {
             </div>
             <Box mt={5}></Box>
         </Container>
+        </Container1>
     );
 }

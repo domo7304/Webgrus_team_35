@@ -14,6 +14,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
+import { Container1, FormWrap, Icon, Wrap } from "./signElement";
+
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
@@ -38,7 +40,10 @@ export default function LogIn() {
     const classes = useStyles();
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container1>
+        
+        <Icon to="/">Study Joa</Icon>
+        <Container component="main" maxWidth="xs" backgroundColor='red'>
             <CssBaseline />
             <div className={classes.paper}>
                 <Avatar className={classes.avatar}>
@@ -104,5 +109,7 @@ export default function LogIn() {
             </div>
             <Box mt={8}></Box>
         </Container>
+       
+        </Container1>
     );
 }
