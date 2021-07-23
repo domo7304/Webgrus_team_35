@@ -8,10 +8,12 @@ import findID from "./pages/findid";
 import findPW from "./pages/findpw";
 import MessengerCustomerChat from 'react-messenger-customer-chat';
 
+
 function App() {
     return (
         <div>
         <Router>
+            
             <Switch>
                 <Route path="/" component={Home} exact />
                 <Route path="/signup" exact component={SignPage} />
