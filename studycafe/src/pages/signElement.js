@@ -8,14 +8,19 @@ export const Container1 = styled.div`
     left: 0;
     right: 0;
     top: 0;
-    z-index: -2;
+    z-index: 0;
     overflow: hidden;
-    background:  rgba(10, 201, 122, 1) 100%;
+    background: linear-gradient(
+        108deg,
+        rgba(1, 147, 86, 1) 0%,
+        rgba(10, 201, 122, 1) 100%
+    );
 `;
 
 export const FormWrap = styled.div`
     height: 100%;
     display: flex;
+    
     flex-direction: column;
     justify-content: center;
 
@@ -28,7 +33,7 @@ export const Icon = styled(Link) `
     margin-left: 32px;
     margin-top: 32px;
     text-decoration: none;
-    color: #10101b;
+    color: #fff;
     font-weight: 700;
     font-size: 32px;
 
@@ -38,9 +43,21 @@ export const Icon = styled(Link) `
     }
 `;
 
+export const FormContent = styled.div`
+    height: 100%;
+    display: flex;
+    
+    flex-direction: column;
+    justify-content: center;
+
+    @media screen and (max-width: 480px) {
+        padding: 10px;
+    }
+`;
+
 export const Form = styled.form`
     background: #010101;
-    max-widht: 400px;
+    max-width: 420px;
     height: auto;
     width: 100%;
     z-index: 1;
@@ -52,5 +69,76 @@ export const Form = styled.form`
 
     @media screen adn (max-width: 400px) {
         padding: 32px 32px;
+    }
+`
+export const FormH1 = styled.h1`
+    margin-bottom : 40px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 400;
+    text-align: center;
+`;
+
+export const FormLabel = styled.label`
+    margin-bottom: 8px;
+    font-size: 14px;
+    color:#fff;
+`;
+
+export const FormInput = styled.input`
+    padding: 16px 40px;
+    margin-bottom: 32px;
+    border: none;
+    border-radius: 4px;
+`;
+
+export const FormButton = styled.button`
+    background: rgba(10, 201, 122, 1);
+    padding: 16px 0;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+`;
+
+export const TextContainer=styled.li`
+    margin-top: 15px;
+    display: flex;
+    height: 16px;
+    justify-content: space-between;
+`
+
+export const Text = styled(Link)`
+    height: 16px;
+    margin-top: 5px;
+    color: #fff;
+    font-size: 14px;
+    justify-content: felx-end;
+    cursor: pointer;
+    align-items: center;
+    text-decoration: none;
+`;
+
+export const CheckButton = styled.button`
+    background: rgba(10, 201, 122, 1);
+    padding: 16px 16px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 32px;
+    widht: 80px;
+`;
+
+export const IDContainer = styled.li`
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+   
+
+    @media screen and (max-width: 480px) {
+        padding: 10px;
     }
 `
