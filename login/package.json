@@ -7,7 +7,7 @@
     "Webgrus_team_35": "www.js"
   },
   "scripts": {
-    "start": "nodemon ./server/bin/www.js",
+    "start": "nodemon ./server/bin/www.js", 
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
