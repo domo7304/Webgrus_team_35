@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const ServicesContainer = styled.div`
-    height: 860px;
+    height: 900px;
     display: flex;
     flex-direction : column;
     justify-content: center;
@@ -21,9 +21,9 @@ export const ServicesWrapper = styled.div`
     max-width: 1000px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr; // 3개사진 넣을것이므로 3개 => 자유롭게 조정가능
+    grid-template-columns: 1fr 1fr; // 2개사진 넣을것이므로 2개 => 자유롭게 조정가능
     align-items: center;
-    grid-gap: 16px;
+    grid-gap: 48px;
     padding: 0 50px;
 
     @media screen and (max-width: 1000px) {
@@ -43,7 +43,7 @@ export const ServicesCard = styled.div`
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-    max-hight: 340px;
+    max-height: 360px;
     padding: 30px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     trandsition: all 0.2s ease-in-out;
@@ -56,14 +56,15 @@ export const ServicesCard = styled.div`
 `
 
 export const ServicesIcon = styled.img`
-    height: 160px;
-    width: 160px;
+    height: 320px;
+    width: 400px;
     margin-bottom: 10px;
 `
 export const ServicesH1 = styled.h1`
     font-size: 2.5rem;
     color:#fff;
-    margin-bottom: 64px;
+    margin-bottom: 32px;
+    //margin-top: 32px;
 
     @media screen and (max-width: 480px) {
         font-size: 2rem;

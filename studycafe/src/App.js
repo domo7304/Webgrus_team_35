@@ -7,18 +7,21 @@ import LoginPage from "./pages/login";
 import findID from "./pages/findid";
 import findPW from "./pages/findpw";
 import MessengerCustomerChat from "react-messenger-customer-chat";
-import customer from "./components/Customer/customer";
-
+import SignIn from "./pages/singin";
+import SignUp from "./pages/signup";
+import FindId1 from "./pages/findid1";
+import FindPW1 from "./pages/findpw1";
+import SignUp1 from "./pages/signup1";
 function App() {
     return (
         <div>
             <Router>
                 <Switch>
                     <Route path="/" component={Home} exact />
-                    <Route path="/signup" exact component={SignPage} />
-                    <Route path="/login" exact component={LoginPage} />
-                    <Route path="/findid" exact component={findID} />
-                    <Route path="/findpw" exact component={findPW} />
+                    <Route path="/signup" exact component={SignUp1} />
+                    <Route path="/login" exact component={SignIn} />
+                    <Route path="/findid" exact component={FindId1} />
+                    <Route path="/findpw" exact component={FindPW1} />
                 </Switch>
             </Router>
 
