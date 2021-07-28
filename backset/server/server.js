@@ -1,39 +1,55 @@
 const express = require("express");
 const app = express();
+
+// 필요한 미들웨어들
 const cors = require("cors");
 const session = require("express-session");
-const connect = require("./schemas");
+const cookieParser = require('cookie-parser');
+const mongoose = require('mongoose');
 
-const bodyParser = require("body-parser");
+// 라우터 경로 설정
+const boardRouter = require('./routes/boardRouter');
+const reservationRouter = require('./routes/reservationRouter');
+const userRouter = require('./routes/userRouter');
 
-const mongodb = require("mongodb");
-const MongoClient = mongodb.MongoClient;
-const connectionURL = "mongodb://127.0.0.1:27017";
-const databaseName = "task-manager";
+// 미들웨어 사용 등록
+app.use(express.json()); //json데이터를 주고 받기 위해 사용
+app.use(express.urlencoded({ extended: true })); //배열과 같은 것들을 받아오기 위함
+app.use(cookieParser());
+app.use("/board", boardRouter);
+app.use("/reservation", reservationRouter);
+app.use("/user", userRouter);
 
-function getCurrentDate(hour=0){  //원하는시간을 투입한다. 일단 여기서 디폴트는 0으로설정.
-  var date = new Date();
-  var year = date.getFullYear(); 
-  var month = date.getMonth();
-  var today = date.getDate();
-  var hours = date.getHours()+hour;
-  var minutes = date.getMinutes();
-  var seconds = date.getSeconds();
-  var milliseconds = date.getMilliseconds();
-  return new Date(Date.UTC(year, month, today, hours, minutes, seconds, milliseconds));
-}
+// mongoDB 연결
+const mongoURI = 'mongodb+srv://root:1234@logindb.xsreo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+mongoose.connect(mongoURI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+})
+.then(() => console.log('mongoDB connected!'))
+.catch(err => console.log(err));
 
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+// 서버 가동
+const PORT = 3000;
+app.listen(PORT, () =>{
+  console.log(`server listening on port ${PORT}!`);
+})
 
-connect();
 
+
+// 아래 코드들 역할이나 로직을 알 수 있을까요?
+
+
+//다른 도메인과 통신 가능하게 하는 세팅
 const corsOptions = {
   origin: true,
   credentials: true
 };
-//다른 도메인과 통신 가능하게 하는 세팅
+
+//node.js에서 express session을 사용하기 위한 설정
+app.use(cors(corsOptions));
 
 app.use(
   session({
@@ -46,17 +62,12 @@ app.use(
     }
   })
 );
-//node.js에서 express session을 사용하기 위한 설정
-app.use(cors(corsOptions));
 
-app.use(express.json());//json데이터를 주고 받기 위해 사용
-app.use(express.urlencoded({ extended: true }));//배열과 같은 것들을 받아오기 위함
-
-app.use("/member", require("./routes/memberRouter"));//require과 같은 라우터를 사용하기 위한 url은 /member이다.
-app.use("/board", require("./routes/boardRouter"));//바로 위 코드와 같은 양식
-app.use("/book", require("./routes/bookingRouter"));
+const MongoClient = mongoose.MongoClient;
+const databaseName = "task-manager";
 
 const interval = 3000;  //reload 시간간격.
+
 app.listen(8080, () => {
   console.log("listening...");
   console.log(`Server Listening on 8080`)  // 서버 실행.

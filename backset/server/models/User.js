@@ -1,11 +1,11 @@
-"use strict";
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt'); 
 const saltRounds = 10; // salt를 이용하여 암호화를 할 것. saltRounds를 salt의 자릿수를 말함
 const jwt = require('jsonwebtoken'); 
 
-const { Schema } = mongoose;
+const { Schema } = mongoose.Schema;
+
 const userSchema = new Schema({
   email: {
     type: String,
@@ -51,7 +51,7 @@ const userSchema = new Schema({
 // mongoose에서 가져온 method, 'save' 라는 동작 이전에 어떠한 동작을 한다고 적어놓는 것
 // 해당 동작이 끝난 후 다시 save 로 돌아가서 작업 진행
 userSchema.pre('save', function(next){
-  let user = this;
+  const user = this;
 
   // 비밀번호에 변경사항이 있을 때에만 암호화가 동작하도록 if문 작성
   if (user.isModified('password')){
@@ -81,10 +81,10 @@ userSchema.methods.comparePassword = function(plainPassword, callback) {
 
 userSchema.methods.generateToken = function(callback) {
   // jsonwebtoken 이용하여 토큰 생성
-  let user = this;
+  const user = this;
 
   // DB에 저장될 때 부여되는 _id로 토큰 생성, user.token에 저장
-  let token = jwt.sign(user._id.toHexString(), 'secretToken');
+  const token = jwt.sign(user._id.toHexString(), 'secretToken');
   user.token = token;
 
   // 성공적으로 토큰을 저장하면 user정보를 다시 반환
@@ -108,6 +108,9 @@ userSchema.statics.findByToken = function(token, callback){
   });
 };
 
+const User = mongoose.model('User', userSchema);
+
+module.exports = { User };
 
 /*
   나중에 es6 로 바꿔 코딩해줘야함
@@ -140,10 +143,3 @@ userSchema.static("generateToken", function (user) {
     return jwt.sign(user._id.toHexString(), "secretToken");
 })
 */
-
-//module.exports = mongoose.model("User", userSchema);
-
-const User = mongoose.model('User', userSchema);
-
-module.exports = { User };
-
