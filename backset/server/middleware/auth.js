@@ -1,5 +1,5 @@
 
-const { User } = require("../models/user");
+const { User } = require("../models/User");
 
 const auth = (req, res, next) => {
   // 사용자의 요청이 인증을 필요로 할 때마다 client <-> server 간 사용자 인증을 처리

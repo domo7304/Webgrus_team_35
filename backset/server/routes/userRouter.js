@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 
 const ctrl = require("../controller/userController");
-const auth = require("../middleware/auth");
+const { auth } = require("../middleware/auth");
 
 router.get("/auth", auth, ctrl.auth);
 router.get("/logout", auth, ctrl.logout);
 
-router.post("/join", ctrl.register);
+router.post("/register", ctrl.register);
 router.post("/login", ctrl.login);
 
 router.post("/deleteUser", ctrl.deleteUser);

@@ -4,25 +4,21 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10; // salt를 이용하여 암호화를 할 것. saltRounds를 salt의 자릿수를 말함
 const jwt = require('jsonwebtoken'); 
 
-const { Schema } = mongoose.Schema;
-
-const userSchema = new Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true
-  },
+const userSchema = mongoose.Schema({
   name: {
     type: String,
     required: true
   },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true // 공백 제거
+  },
   password: {
     type: String,
-    required: true
-  },
-  salt: {
-    type: String,
-    required: true
+    required: true,
+    trim: true,
   },
   createdAt: {
     type: Date,
@@ -109,7 +105,6 @@ userSchema.statics.findByToken = function(token, callback){
 };
 
 const User = mongoose.model('User', userSchema);
-
 module.exports = { User };
 
 /*
