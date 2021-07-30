@@ -1,5 +1,5 @@
 
-const User = require("../models/User");
+const { User } = require("../models/User");
 
 const auth = async (req, res) => {
   // 해당 get까지 도착했다는 것은 middleware/auth 를 통과했다는 뜻

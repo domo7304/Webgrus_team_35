@@ -16,7 +16,6 @@
   "homepage": "https://github.com/sortinghyeok/several_for_web.git#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "crypto": "^1.0.1",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "mongoose": "^5.13.2",
@@ -26,13 +25,8 @@
     "cookie-parser": "^1.4.5",
     "jsonwebtoken": "^8.5.1",
     "save": "^2.4.0",
-    "antd": "^4.16.6",
-    "axios": "^0.21.1",
-    "body-parser": "^1.19.0",
     "concurrently": "^6.2.0",
-    "http-proxy-middleware": "^2.0.1",
     "mongodb": "^3.6.10",
-    "react-redux": "^7.2.4",
     "url-search-params-polyfill": "^8.1.1"
   },
   "bugs": {
