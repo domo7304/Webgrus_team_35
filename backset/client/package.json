@@ -26,6 +26,8 @@
     "react": "^16.14.0",
     "react-bootstrap": "^1.6.1",
     "react-dom": "^16.14.0",
+    "react-icons": "^4.2.0",
+    "react-messenger-customer-chat": "^0.8.0",
     "react-recaptcha-v3": "^1.2.0",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",

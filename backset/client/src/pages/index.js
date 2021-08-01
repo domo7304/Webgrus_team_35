@@ -6,6 +6,7 @@ import InfoSection from '../components/InfoSection';
 import Services from '../components/Services';
 import { homeObjZero, homeObjOne, homeObjTwo, homeObjThree, homeObjFour } from '../components/InfoSection/Data';
 import Footer from '../components/Footer';
+import Booking from '../components/Booking';
 const Home = () => {
     const [isOpen, setIsOpen] = useState(false);
 
