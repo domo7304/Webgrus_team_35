@@ -31,7 +31,7 @@ mongoose.connect(config.mongoURI, {
 .catch(err => console.log(err));
 
 // 서버 가동
-const PORT = 3000;
+const PORT = 5000;
 app.listen(PORT, () =>{
   console.log(`server listening on port ${PORT}!`);
 })
