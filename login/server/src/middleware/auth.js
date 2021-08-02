@@ -1,11 +1,12 @@
+"use strict";
 
-const { User } = require("../models/User");
+const User = require("../models/User");
 
-const auth = (req, res, next) => {
+let auth = (req, res, next) => {
   // 사용자의 요청이 인증을 필요로 할 때마다 client <-> server 간 사용자 인증을 처리
 
   // client 쿠키에서 토큰을 가져옴
-  const token = req.cookies.x_auth;
+  let token = req.cookies.x_auth;
 
   // 토큰을 복호화한 후 user를 찾기
   User.findByToken(token, (err, user) => {
@@ -21,6 +22,6 @@ const auth = (req, res, next) => {
     req.user = user;
     next();
   });
-}
+};
 
-module.exports = { auth };
+module.exports = auth;  
