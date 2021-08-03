@@ -14,7 +14,7 @@ class BoardDetail extends Component {
     if (this.props.location.query !== undefined) {//location.query는 getDetail함수에서 id로부터 상세한 정보를 가져오기 위해 이용되는 것
       this.getDetail();//로그인이 되어있다면 getDetail함수 호출
     } else {
-      window.location.href = "/";//로그인이 풀려있다면 메인페이지로 돌리기
+      window.location.href = "/board";//로그인이 풀려있다면 메인페이지로 돌리기
     }
   }
 
@@ -29,7 +29,7 @@ class BoardDetail extends Component {
         //정상 수행
         .then(returnData => {
           alert("게시글이 삭제 되었습니다.");
-          window.location.href = "/";
+          window.location.href = "/board";
         })
         //에러
         .catch(err => {

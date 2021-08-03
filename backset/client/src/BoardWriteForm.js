@@ -68,7 +68,7 @@ class BoardWriteForm extends Component {
       .then(returnData => {
         if (returnData.data.message) {
           alert(returnData.data.message);
-          window.location.href = "/";
+          window.location.href = "/board";
         } else {
           alert("글쓰기 실패");
         }

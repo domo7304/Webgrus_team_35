@@ -12,9 +12,7 @@ import SignUp from "./pages/signup";
 import FindId1 from "./pages/findid1";
 import FindPW1 from "./pages/findpw1";
 import SignUp1 from "./pages/signup1";
-import Booking from "./components/Booking";
-import BookingForm from "./BookingForm";
-import renderCards from "./BookingForm";
+import BoardForm from "./BoardForm";
 function App() {
     return (
         <div>
@@ -25,8 +23,7 @@ function App() {
                     <Route path="/login" exact component={SignIn} />
                     <Route path="/findid" exact component={FindId1} />
                     <Route path="/findpw" exact component={FindPW1} />
-                    <Route path="/booking" exact component={Booking} />
-                   
+                    <Route path="/board" exact component={BoardForm} />
                 </Switch>
             </Router>
         </div>
