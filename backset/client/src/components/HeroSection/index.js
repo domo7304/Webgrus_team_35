@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Video from "../../videos/video.mp4";
-import { Button } from "../ButtonElement";
+import {ButtonS } from "../ButtonElement";
 import {
     HeroContainer,
     HeroBg,
@@ -29,7 +29,7 @@ const HeroSection = () => {
                 <HeroH1>Joa 스터디카페 인하대점</HeroH1>
                 <HeroP>시간이 잊혀지는 학습공간</HeroP>
                 <HeroBtnWrapper>
-                    <Button
+                    <ButtonS
                         to="signup"
                         onMouseEnter={onHover}
                         onMouseLeave={onHover}
@@ -37,7 +37,7 @@ const HeroSection = () => {
                         dark="true"
                     >
                         Get Started {hover ? <ArrowForward /> : <ArrowRight />}
-                    </Button>
+                    </ButtonS>
                 </HeroBtnWrapper>
             </HeroContent>
         </HeroContainer>

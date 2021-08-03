@@ -15,6 +15,7 @@ export const homeObjZero = {
     dark: false,
     primary: false,
     darkText: true,
+    linkR: "/board"
 };
 
 // 시설소개
@@ -51,6 +52,7 @@ export const homeObjTwo = {
     dark: false,
     primary: false,
     darkText: true,
+    linkR: "/book"
 };
 
 //오시는길
@@ -87,4 +89,5 @@ export const homeObjFour = {
     dark: false,
     primary: false,
     darkText: true,
+    linkR: "/signup"
 };
