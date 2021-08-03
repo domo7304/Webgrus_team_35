@@ -41,7 +41,7 @@ const SignIn = () => {
         //router.post(body);
         // /../../../server/routes/memberRouter
         axios
-            .post("/login", body)
+            .post("/api/user/login", body)
             .then((res) => {
                 console.log("로그인 성공");
             })

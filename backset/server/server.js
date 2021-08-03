@@ -16,9 +16,9 @@ const userRouter = require('./routes/userRouter');
 app.use(express.json()); //json데이터를 주고 받기 위해 사용
 app.use(express.urlencoded({ extended: true })); //배열과 같은 것들을 받아오기 위함
 app.use(cookieParser());
-app.use("/board", boardRouter);
-app.use("/booking", bookingRouter);
-app.use("/user", userRouter);
+app.use("/api/board", boardRouter);
+app.use("/api/booking", bookingRouter);
+app.use("/api/user", userRouter); 
 
 // mongoDB 연결
 mongoose.connect(config.mongoURI, {
