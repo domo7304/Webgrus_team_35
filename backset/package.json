@@ -17,6 +17,7 @@
   "homepage": "https://github.com/sortinghyeok/several_for_web.git#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "ckeditor4-react": "^1.4.2",
     "concurrently": "^6.2.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
