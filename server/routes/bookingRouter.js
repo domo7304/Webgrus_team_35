@@ -1,30 +1,31 @@
-
 const express = require('express');
 const router = express.Router();
 
 const mongodb = require("mongodb");
 const MongoClient = mongodb.MongoClient;
-const connectionURL = "mongodb://127.0.0.1:27017";
-const databaseName = "task-manager";
+// const connectionURL = "mongodb://127.0.0.1:27017";
+// const databaseName = "task-manager";
+const connectionURL = "mongodb+srv://root:1234@logindb.xsreo.mongodb.net/webDB?retryWrites=true&w=majority";
+const databaseName = "webDB";
 
-function getCurrentDate(hour){  //원하는시간을 투입한다. 일단 여기서 디폴트는 0으로설정.
+//원하는시간을 투입한다. 일단 여기서 디폴트는 0으로설정.
+function getCurrentDate(hour){ 
   var date = new Date();
   var year = date.getFullYear(); 
   var month = date.getMonth();
   var today = date.getDate();
   var hours = date.getHours()+hour;
-  var minutes = date.getMinutes();
+  var minutes = date.getMinutes();  //일단 분으로 해서 테스트해보자.
   var seconds = date.getSeconds();
   var milliseconds = date.getMilliseconds();
   return new Date(Date.UTC(year, month, today, hours, minutes, seconds, milliseconds));
 }
 
-
 /* 함수사용할때 저렇게 지금 내버전에서는 인자로 넣어서 콜백함수를 사용하자. */
 router.get('/showSeats', (req, res) => {
     MongoClient.connect(connectionURL, { useNewUrlParser: true }, (err, client) => {
         if (err) {
-          return console.log("Unable to connect to database.");
+          return console.log("Unable to connect to database 연결불가합니다..");
         }
         console.log("Connected correctly.");
         const db = client.db(databaseName);
@@ -47,8 +48,6 @@ router.get('/showSeats', (req, res) => {
     })
 })
 
-
-
 router.post('/booking', (req, res) => {
   MongoClient.connect(connectionURL, { useNewUrlParser: true }, (err, client) => {
       if (err) {
@@ -60,14 +59,14 @@ router.post('/booking', (req, res) => {
        {seatNo:req.body.seatNo}, //seatNo를 String형으로 바꾸어서 진행햇더니 성공햇다.
        {
           seatNo:req.body.seatNo, 
+          seatNoNum : req.body.seatNoNum,
           isAvailable:false,
           userId:req.body.userId,
           endTime:getCurrentDate(req.body.addTime)
        }
      )
-     
+     return res.json({success:true})
 })
 })
-
 
 module.exports = router;
