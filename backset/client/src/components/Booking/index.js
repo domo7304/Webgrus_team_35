@@ -22,8 +22,10 @@ const Booking = () => {
     const [SeatDetail1, setSeatDetail1] = useState([])
     const [SeatDetail2, setSeatDetail2] = useState([])
     const [SeatDetail3, setSeatDetail3] = useState([])
-    
+    const [UserDetail,setUserDetail] = useState([])
+
     useEffect(() => {
+      
     axios.get('/api/book/showSeats')   
       .then(response => {  
         if(response.data.success){
@@ -34,6 +36,10 @@ const Booking = () => {
             alert('좌석 정보를 불러오지 못하였습니다.')
         }
       })
+    // axios.get('/api/user/auth')
+    //   .then(response=>{
+    //     setUserDetail(response.data); //현재 로그인된 사용자의 정보를 가져온다.
+    //   })
     }, [])
 
     //배열의 값을 추출해서 진행해보자. 받아온걸
@@ -50,6 +56,7 @@ const Booking = () => {
                   
                   var params = new URLSearchParams();
                   params.append('seatNo', seat.seatNo);
+                  params.append('seatNoNum', seat.seatNoNum);
                   params.append('userId', "hyunsik");
                   params.append('addTime', addTime2);
                   
@@ -57,7 +64,7 @@ const Booking = () => {
                      .then(response => {  
                        if(response.data.success){
                            alert('좌석예약이 완료되었습니다.')
-                           //이후에 다른페이지로 redirection해줘야 할것이다.
+                           window.location.reload()
                        } else{
                            alert('예약에 실패하였습니다.')
                        }
@@ -87,6 +94,7 @@ const Booking = () => {
                   
                   var params = new URLSearchParams();
                   params.append('seatNo', seat.seatNo);
+                  params.append('seatNoNum', seat.seatNoNum);
                   params.append('userId', "hyunsik");
                   params.append('addTime', addTime2);
                   
@@ -94,7 +102,7 @@ const Booking = () => {
                      .then(response => {  
                        if(response.data.success){
                            alert('좌석예약이 완료되었습니다.')
-                           //이후에 다른페이지로 redirection해줘야 할것이다.
+                           window.location.reload()
                        } else{
                            alert('예약에 실패하였습니다.')
                        }
@@ -124,6 +132,7 @@ const Booking = () => {
                   
                   var params = new URLSearchParams();
                   params.append('seatNo', seat.seatNo);
+                  params.append('seatNoNum', seat.seatNoNum);
                   params.append('userId', "hyunsik");
                   params.append('addTime', addTime2);
                   
@@ -131,7 +140,7 @@ const Booking = () => {
                      .then(response => {  
                        if(response.data.success){
                            alert('좌석예약이 완료되었습니다.')
-                           //이후에 다른페이지로 redirection해줘야 할것이다.
+                           window.location.reload()
                        } else{
                            alert('예약에 실패하였습니다.')
                        }
@@ -168,7 +177,8 @@ const Booking = () => {
                                 </Row>
                                 <Row>
                                     {renderCards3}
-                                </Row>    
+                                </Row>
+                                
                             </Container>
                         </Form>
                     </FormContent>

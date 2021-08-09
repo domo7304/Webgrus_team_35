@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { propTypes } from "react-bootstrap/esm/Image";
-//import{router.post} from "../../../server/routes/memberRouter";
 
 import {
     Container1,
@@ -30,6 +29,7 @@ const SignIn = () => {
         setInputPw(e.target.value);
     };
 
+    // login 버튼 클릭 event 발생 시
     const onSubmitHandler = (e) => {
         e.preventDefault();
 
@@ -37,7 +37,16 @@ const SignIn = () => {
             email: inputId,
             password: inputPw,
         };
+        console.log(`body.email : ${body.email}, body.password : ${body.password}`);
 
+        axios
+            .post("/api/user/login", body)
+            .then((res) => {
+                console.log(res.body);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
     return (

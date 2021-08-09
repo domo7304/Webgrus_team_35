@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import CKEditor from "ckeditor4-react";
+import { CKEditor } from "ckeditor4-react";
 //에디터를 가져와 글쓰기 시 다양한 데이터를 좀 더 예쁘게 보여줄 수 있음
 import { Button, Form} from "react-bootstrap";
 import axios from "axios";
 import $ from "jquery";
 import {} from "jquery.cookie";
+
 axios.defaults.withCredentials = true;
 const headers = { withCredentials: true };
 //글쓰기 버튼을 누르면 나오는 페이지 및 기능 구현

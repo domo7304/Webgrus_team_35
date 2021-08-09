@@ -3,7 +3,7 @@ const Board = require("../models/Board");
 
 const deletePost = async (req, res) => {
   try {
-    await Board.remove({
+    await Board.deleteOne({
       _id: req.body._id //요청받은 아이디를 받아 게시글의 어떤 글을 지울 지 판단하게 하고, remove()함수로 글을 지움
     });
     res.json({ message: true });
@@ -15,7 +15,7 @@ const deletePost = async (req, res) => {
 
 const updatePost = async (req, res) => {
   try {
-    await Board.update(
+    await Board.updateOne(
       { _id: req.body._id },
       {
         $set: {
