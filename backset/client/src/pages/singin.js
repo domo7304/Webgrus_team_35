@@ -30,25 +30,14 @@ const SignIn = () => {
         setInputPw(e.target.value);
     };
 
-    // login 버튼 클릭 event 발생 시
-    const onClickLogin = () => {
+    const onSubmitHandler = (e) => {
+        e.preventDefault();
+
         let body = {
             email: inputId,
             password: inputPw,
         };
-        console.log("확인");
 
-        //router.post(body);
-        // /../../../server/routes/memberRouter
-        axios
-            .post("/api/user/login", body)
-            .then((res) => {
-                console.log("로그인 성공");
-            })
-            .catch((err) => {
-                console.log(err);
-                alert("로그인 실패");
-            });
     };
 
     return (
@@ -56,8 +45,8 @@ const SignIn = () => {
             <Container1>
                 <FormWrap>
                     <Icon to="/">Study Joa</Icon>
-                    <FormContent>
-                        <Form action="#">
+                    <FormContent onSubmit={onSubmitHandler}>
+                        <Form>
                             <FormH1>Sign in to your account</FormH1>
                             <FormLabel
                                 htmFor="for"
@@ -75,9 +64,7 @@ const SignIn = () => {
                                 Password
                             </FormLabel>
                             <FormInput type="password" required />
-                            <FormButton type="submit" onClick={onClickLogin}>
-                                로그인
-                            </FormButton>
+                            <FormButton type="submit">로그인</FormButton>
                             <TextContainer>
                                 <Text to="findid">ID 찾기</Text>
                                 <Text to="findpw">비밀번호 찾기</Text>
