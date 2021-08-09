@@ -38,15 +38,6 @@ const SignIn = () => {
             password: inputPw,
         };
 
-        axios
-            .get("localhost:5000/api/user/login", body)
-            .then((res) => {
-                console.log(res.body);
-            })
-            .catch((err) => {
-                console.log(err);
-                alert("로그인 실패");
-            });
     };
 
     return (

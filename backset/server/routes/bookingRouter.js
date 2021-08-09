@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 
@@ -27,15 +26,28 @@ router.get('/showSeats', (req, res) => {
           return console.log("Unable to connect to database.");
         }
         console.log("Connected correctly.");
-        // db가 없으면 생성. 있으면 조회
         const db = client.db(databaseName);
-        // 해당 db에 collection가 없으면 생성(있으면 조회) 후 document 하나 저장
          db.collection("seats").find().toArray(function (err, docs) {
+            var li1=[]
+            for(var i=0;i<=9;i++){
+              li1.push(docs[i])
+            }
+            var li2=[]
+            for(var i=10;i<=19;i++){
+              li2.push(docs[i])
+            }
+            var li3=[]
+            for(var i=20;i<=29;i++){
+              li3.push(docs[i])
+            }
             if(err) return res.json({success:false})
-            return res.json({success:true,docs})
-         });
+            return res.json({success:true,li1,li2,li3})
+         })        
     })
 })
+
+
+
 router.post('/booking', (req, res) => {
   MongoClient.connect(connectionURL, { useNewUrlParser: true }, (err, client) => {
       if (err) {
