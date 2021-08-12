@@ -12,11 +12,36 @@ import { Container1,
         Seat
 } from './BookingElement'
 
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
+
 const Booking = () => {
     const [hover, setHover] = useState(false);
-
+    const [open, setOpen] = React.useState(false);
+    const [Reserve, setReserve] = React.useState(false);
     const onHover = () => {
         setHover(!hover);
+    };
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    const ReserveOK = () => {
+      setReserve(true);
+    };
+  
+    const ReserveNO = () => {
+      setReserve(false);
     };
 
     const [SeatDetail1, setSeatDetail1] = useState([])
@@ -43,13 +68,45 @@ const Booking = () => {
     }, [])
 
     //배열의 값을 추출해서 진행해보자. 받아온걸
+
+    const customModal = (text) => {
+      return (
+        <div>
+          <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"좌석예약 확인"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            text
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={ReserveNO} color="primary">
+            취소
+          </Button>
+          <Button onClick={ReserveOK} color="white" autoFocus>
+            확인
+          </Button>
+        </DialogActions>
+      </Dialog>
+        </div>
+      )
+    }
+
     const renderCards1= SeatDetail1.map((seat,index)=>{        
         return(       
         <span>
             {   
               seat.isAvailable?  
               <Seat  onMouseEnter={onHover} onMouseLeave={onHover} onClick={function(){
-                var reserve = window.confirm('좌석을 예약하시겠습니까?');
+                handleClickOpen();
+                customModal();
+                //var reserve = window.confirm('좌석을 예약하시겠습니까?');
+                var reserve= Reserve;
                 if (reserve) {
                   var addTime1 = prompt("예약하실 시간을 입력해주세요. 예약은 시간단위로만 가능합니다. \n예시) 2시간일시 2 입력");
                   var addTime2 = parseInt(addTime1);
@@ -125,7 +182,8 @@ const Booking = () => {
             {   
               seat.isAvailable?  
               <Seat  onMouseEnter={onHover} onMouseLeave={onHover} onClick={function(){
-                var reserve = window.confirm('좌석을 예약하시겠습니까?');
+               // var reserve = window.confirm('좌석을 예약하시겠습니까?');
+               var reserve = Reserve;
                 if (reserve) {
                   var addTime1 = prompt("예약하실 시간을 입력해주세요. 예약은 시간단위로만 가능합니다. \n예시) 2시간일시 2 입력");
                   var addTime2 = parseInt(addTime1);
@@ -168,6 +226,10 @@ const Booking = () => {
                     <FormContent>
                         <Form action="#">
                             <FormH1>이용좌석을 선택하세요</FormH1>
+                            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+        예약하기
+      </Button>
+      
                             <Container>
                                 <Row>
                                     {renderCards1}
