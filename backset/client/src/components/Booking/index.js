@@ -20,6 +20,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CustomModal from './customModal';
 import AlertModal from './alertModal';
+import TimeModal from './timeModal';
 
 
 const Booking = () => {
@@ -29,6 +30,8 @@ const Booking = () => {
     const [alertOpen, setAlert] = React.useState(false); // 이미 예약된 좌석
     const [alertOpen2, setAlert2] = React.useState(false); // 좌석 예약 완료
     const [alertOpen3, setAlert3] = React.useState(false); // 좌석 예약 실패 
+    const [timeOpen, setTimeModal] = React.useState(false); // time modal 
+
     const onHover = () => {
       
         setHover(!hover);
@@ -50,8 +53,12 @@ const Booking = () => {
       setAlert(false);
       setAlert2(false);
       setAlert3(false);
+      
     };
 
+    const timeClose = () => {
+      setTimeModal(false);
+    }
     const alertClickOpen2 = () => {
       setAlert2(true);
     };
@@ -60,6 +67,7 @@ const Booking = () => {
       setAlert3(true);
     };
 
+    
   
    
 
@@ -266,6 +274,11 @@ const Booking = () => {
                             alertOpen={alertOpen3}
                             alertClose={alertClose}
                             text={"좌석 예약이 실패하였습니다."}
+                            />
+                            <TimeModal
+                            timeOpen={timeOpen}
+                            timeClose={timeClose}
+                            text={"이용하실 시간을 선택해주세요"}
                             />
                             <Container>
                                 <Row>
