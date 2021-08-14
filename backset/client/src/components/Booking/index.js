@@ -19,12 +19,16 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CustomModal from './customModal';
+import AlertModal from './alertModal';
 
 
 const Booking = () => {
     const [hover, setHover] = useState(false);
     const [open, setOpen] = React.useState(false);
     const [Reserve, setReserve] = React.useState(false);
+    const [alertOpen, setAlert] = React.useState(false); // 이미 예약된 좌석
+    const [alertOpen2, setAlert2] = React.useState(false); // 좌석 예약 완료
+    const [alertOpen3, setAlert3] = React.useState(false); // 좌석 예약 실패 
     const onHover = () => {
       
         setHover(!hover);
@@ -38,9 +42,56 @@ const Booking = () => {
       setOpen(false);
     };
 
-    const ReserveOK = () => {
-      setReserve(true);
+    const alertClickOpen = () => {
+      setAlert(true);
+    };
+
+    const alertClose = () => {
+      setAlert(false);
+      setAlert2(false);
+      setAlert3(false);
+    };
+
+    const alertClickOpen2 = () => {
+      setAlert2(true);
+    };
+
+    const alertClickOpen3 = () => {
+      setAlert3(true);
+    };
+
+  
+   
+
+    const ReserveOK = (seat) => {
       setOpen(false);
+      let addTime1 = prompt("예약하실 시간을 입력해주세요. 예약은 시간단위로만 가능합니다. \n예시) 2시간일시 2 입력");
+      let addTime2 = parseInt(addTime1);
+                  
+      let params = new URLSearchParams();
+      if(seat!==undefined){
+        console.log(seat.seatNoNum);
+        params.append('seatNo', seat.seatNo);
+        params.append('seatNoNum', seat.seatNoNum);
+        params.append('userId', "hyunsik");
+        params.append('addTime', addTime2);
+        
+            axios.post('/api/book/booking', params)   
+            .then(response => {  
+              if(response.data.success){
+                  //alert('좌석예약이 완료되었습니다.')
+                  setAlert2(true);
+                  window.location.reload()
+                  
+              } else{
+                  //alert('예약에 실패하였습니다.')
+                  setAlert3(true);
+                  
+              }
+            }) 
+      }
+      
+      
     };
   
     const ReserveNO = () => {
@@ -52,7 +103,7 @@ const Booking = () => {
     const [SeatDetail2, setSeatDetail2] = useState([])
     const [SeatDetail3, setSeatDetail3] = useState([])
     const [UserDetail,setUserDetail] = useState([])
-
+    const [SelectedSeat,setSelectedSeat] = useState({})
     useEffect(() => {
       
     axios.get('/api/book/showSeats')   
@@ -73,12 +124,17 @@ const Booking = () => {
 
     //배열의 값을 추출해서 진행해보자. 받아온걸
 
+    // 단순 메시지와 확인창만 출력하는 alert함수
+    const CustomAlert = () => {
+      console.log("Custom함수실행");
+      setAlert(true);
+      console.log("Custom변수=" + alertOpen);
+    } 
     const func1 = (seat) => {
       setOpen(true);
       console.log(open);
-      <div>
-       <CustomModal text={"좌석을 예약하시겠습니까?"} open={open} handleClose = {handleClose}/>
-      </div>
+      //선택된 좌석 추가(customModal에 전달해주기 위해서 ReserveOK에서 인수로 seat가 사용됨)
+      setSelectedSeat(seat);
       var reserve = Reserve;
       
                 if (reserve) {
@@ -94,10 +150,12 @@ const Booking = () => {
                      axios.post('/api/book/booking', params)   
                      .then(response => {  
                        if(response.data.success){
-                           alert('좌석예약이 완료되었습니다.')
+                           //alert('좌석예약이 완료되었습니다.')
+                          setAlert2(true);
                            window.location.reload()
                        } else{
-                           alert('예약에 실패하였습니다.')
+                           //alert('예약에 실패하였습니다.')
+                           setAlert(true);
                        }
                      }) 
                 }
@@ -106,7 +164,7 @@ const Booking = () => {
                   <div>
                 
                   <Dialog
-                  
+                
                   open= {true}
                   onClose={handleClose}
                   aria-labelledby="alert-dialog-title"
@@ -128,105 +186,35 @@ const Booking = () => {
                 }
     }
 
-    const renderCards1= SeatDetail1.map((seat,index)=>{        
+    const renderCards1= SeatDetail1.map((seat,index)=>{
+      if(seat===undefined || seat=={} && index==0){
+        setSelectedSeat(seat)
+      }        
         return(       
-        <span>
-            {   
-              seat.isAvailable?  
-              <Seat  variant="outlined" color="primary"  onMouseEnter={onHover} onMouseLeave={onHover} onClick={function(){
-                handleClickOpen();
-                <div>
-                 <Dialog
-        open= {open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{"좌석예약 확인"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            좌석을 예약 하시겠습니까?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick = {ReserveNO} color="primary">
-            취소
-          </Button>
-          <Button onClick={ReserveOK} color="primary" autoFocus>
-            확인
-          </Button>
-        </DialogActions>
-      </Dialog>
-                </div>
-                var reserve = Reserve;
-                if (reserve) {
-                  var addTime1 = prompt("예약하실 시간을 입력해주세요. 예약은 시간단위로만 가능합니다. \n예시) 2시간일시 2 입력");
-                  var addTime2 = parseInt(addTime1);
-                  
-                  var params = new URLSearchParams();
-                  params.append('seatNo', seat.seatNo);
-                  params.append('seatNoNum', seat.seatNoNum);
-                  params.append('userId', "hyunsik");
-                  params.append('addTime', addTime2);
-                  
-                     axios.post('/api/book/booking', params)   
-                     .then(response => {  
-                       if(response.data.success){
-                           alert('좌석예약이 완료되었습니다.')
-                           window.location.reload()
-                       } else{
-                           alert('예약에 실패하였습니다.')
-                       }
-                     }) 
-                }
-                else {
-                   <CustomModal/>
-                }
-              }} primary={true}>{seat.seatNo}</Seat>
-              :
-              <Seat  onMouseEnter={onHover} onMouseLeave={onHover} onClick={()=>handleClickOpen} primary={false}>{seat.seatNo}</Seat>
-              
-              }
-         </span>
+          <span>
+          {   
+            seat.isAvailable?  
+            <Seat  onMouseEnter={onHover} onMouseLeave={onHover} onClick={()=>func1(seat)} primary={true}>{seat.seatNo}</Seat>
+            :
+            <Seat  onMouseEnter={onHover} onMouseLeave={onHover} onClick={()=>CustomAlert()} primary={false}>{seat.seatNo}</Seat>
+            
+            }
+          
+       </span>
         )                     
       })
       const renderCards2= SeatDetail2.map((seat,index)=>{        
         return(       
-        <span>
-            {   
-              seat.isAvailable?  
-              <Seat  onMouseEnter={onHover} onMouseLeave={onHover} onClick={function(){
-                //var reserve = Reserve;
-                var reserve = window.confirm('좌석을 예약하시겠습니까?');
-                if (reserve) {
-                  var addTime1 = prompt("예약하실 시간을 입력해주세요. 예약은 시간단위로만 가능합니다. \n예시) 2시간일시 2 입력");
-                  var addTime2 = parseInt(addTime1);
-                  
-                  var params = new URLSearchParams();
-                  params.append('seatNo', seat.seatNo);
-                  params.append('seatNoNum', seat.seatNoNum);
-                  params.append('userId', "hyunsik");
-                  params.append('addTime', addTime2);
-                  
-                     axios.post('/api/book/booking', params)   
-                     .then(response => {  
-                       if(response.data.success){
-                           alert('좌석예약이 완료되었습니다.')
-                           window.location.reload()
-                       } else{
-                           alert('예약에 실패하였습니다.')
-                       }
-                     }) 
-                }
-                else {
-                   alert('예약을 취소하였습니다.')
-                }
-              }} primary={true}>{seat.seatNo}</Seat>
-              :
-              <Seat  onMouseEnter={onHover} onMouseLeave={onHover} onClick={()=>alert('이미 예약된 좌석입니다.')} primary={false}>{seat.seatNo}</Seat>
-              
-              }
-         </span>
+          <span>
+          {   
+            seat.isAvailable?  
+            <Seat  onMouseEnter={onHover} onMouseLeave={onHover} onClick={()=>func1(seat)} primary={true}>{seat.seatNo}</Seat>
+            :
+            <Seat  onMouseEnter={onHover} onMouseLeave={onHover}  onClick={()=>CustomAlert()} primary={false}>{seat.seatNo}</Seat>
+            
+            }
+          
+       </span>
         )                     
       })
       const renderCards3= SeatDetail3.map((seat,index)=>{        
@@ -237,15 +225,18 @@ const Booking = () => {
               seat.isAvailable?  
               <Seat  onMouseEnter={onHover} onMouseLeave={onHover} onClick={()=>func1(seat)} primary={true}>{seat.seatNo}</Seat>
               :
-              <Seat  onMouseEnter={onHover} onMouseLeave={onHover} onClick={()=>alert('이미 예약된 좌석입니다.')} primary={false}>{seat.seatNo}</Seat>
+              <Seat  onMouseEnter={onHover} onMouseLeave={onHover}  onClick={()=>CustomAlert()} primary={false}>{seat.seatNo}</Seat>
               
               }
+            
          </span>
         )                     
       })
 
     
-
+    //Modal들은 아래처럼 가장 상위에 넣어서 재사용해주시면 됩니다.
+    //여러 Modal을 사용하기 위해서는 다양한 open state를 만드시는 것도 하나의 방법입니다.
+    //rendercards=>onclick=>open 변수 변경 => seat 변수 변경 => ReserveOK 클릭시 뒤에 prompt까지 나오게 됩니다.
     return (
         <>
         <Container1>
@@ -254,8 +245,28 @@ const Booking = () => {
                     <FormContent>
                         <Form action="#">
                             <FormH1>이용좌석을 선택하세요</FormH1>
-                           
-                            <CustomModal/>
+                            <CustomModal 
+                            ReserveOK = {ReserveOK} 
+                            ReserveNO = {ReserveNO} 
+                            seat={SelectedSeat} 
+                            text={"좌석을 예약하시겠습니까?"} 
+                            open={open} 
+                            />
+                            <AlertModal 
+                            alertOpen={alertOpen}
+                            alertClose={alertClose}
+                            text={"이미 예약된 좌석입니다."}
+                            />
+                            <AlertModal 
+                            alertOpen={alertOpen2}
+                            alertClose={alertClose}
+                            text={"좌석 예약이 완료되었습니다."}
+                            />
+                            <AlertModal 
+                            alertOpen={alertOpen3}
+                            alertClose={alertClose}
+                            text={"좌석 예약이 실패하였습니다."}
+                            />
                             <Container>
                                 <Row>
                                     {renderCards1}
