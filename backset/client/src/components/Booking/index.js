@@ -31,6 +31,16 @@ const Booking = () => {
     const [alertOpen2, setAlert2] = React.useState(false); // 좌석 예약 완료
     const [alertOpen3, setAlert3] = React.useState(false); // 좌석 예약 실패 
     const [timeOpen, setTimeModal] = React.useState(false); // time modal 
+    const [time, setTime] = React.useState(0); // 시간변경 함수
+    const [clickFlag, setClick] = React.useState(false);
+    const changeTime  = (newTime) => {
+      setTime(newTime);
+      setClick(true);
+    }
+
+    const setTimeOpen = () => {
+      setTimeModal(true);
+    }
 
     const onHover = () => {
       
@@ -58,6 +68,7 @@ const Booking = () => {
 
     const timeClose = () => {
       setTimeModal(false);
+      setTime(0);
     }
     const alertClickOpen2 = () => {
       setAlert2(true);
@@ -68,14 +79,21 @@ const Booking = () => {
     };
 
     
-  
+   
    
 
     const ReserveOK = (seat) => {
       setOpen(false);
-      let addTime1 = prompt("예약하실 시간을 입력해주세요. 예약은 시간단위로만 가능합니다. \n예시) 2시간일시 2 입력");
-      let addTime2 = parseInt(addTime1);
-                  
+      setSelectedSeat(seat);
+      setTimeModal(true);
+     // let addTime1 = prompt("예약하실 시간을 입력해주세요. 예약은 시간단위로만 가능합니다. \n예시) 2시간일시 2 입력");
+      //let addTime2 = parseInt(addTime1);
+      console.log("예약테스트중 " + time);
+      
+      let addTime2 = time;
+      console.log(addTime2);
+      
+      if (addTime2>0) {
       let params = new URLSearchParams();
       if(seat!==undefined){
         console.log(seat.seatNoNum);
@@ -89,16 +107,22 @@ const Booking = () => {
               if(response.data.success){
                   //alert('좌석예약이 완료되었습니다.')
                   setAlert2(true);
+                  changeTime(0);
                   window.location.reload()
                   
               } else{
                   //alert('예약에 실패하였습니다.')
                   setAlert3(true);
+                  changeTime(0);
                   
               }
             }) 
+      }}
+      else {
+        console.log("1구간");
+        setAlert3(true);
       }
-      
+      console.log("함수종료전" + time);
       
     };
   
@@ -146,9 +170,10 @@ const Booking = () => {
       var reserve = Reserve;
       
                 if (reserve) {
-                  var addTime1 = prompt("예약하실 시간을 입력해주세요. 예약은 시간단위로만 가능합니다. \n예시) 2시간일시 2 입력");
-                  var addTime2 = parseInt(addTime1);
-                  
+                  // var addTime1 = prompt("예약하실 시간을 입력해주세요. 예약은 시간단위로만 가능합니다. \n예시) 2시간일시 2 입력");
+                  // var addTime2 = parseInt(addTime1);
+                  var addTime2 =  setTimeModal(true);
+                  if (addTime2>0) {
                   var params = new URLSearchParams();
                   params.append('seatNo', seat.seatNo);
                   params.append('seatNoNum', seat.seatNoNum);
@@ -160,37 +185,19 @@ const Booking = () => {
                        if(response.data.success){
                            //alert('좌석예약이 완료되었습니다.')
                           setAlert2(true);
+                          setTime(0);
                            window.location.reload()
                        } else{
                            //alert('예약에 실패하였습니다.')
-                           setAlert(true);
+                           setAlert3(true);
+                           setTime(0);
                        }
                      }) 
                 }
+              }
                 else {
-                  setOpen(true);
-                  <div>
-                
-                  <Dialog
-                
-                  open= {true}
-                  onClose={handleClose}
-                  aria-labelledby="alert-dialog-title"
-                  aria-describedby="alert-dialog-description"
-                >
-                  <DialogTitle id="alert-dialog-title">{"좌석예약 확인"}</DialogTitle>
-                  <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                      예약을 취소하였습니다.
-                    </DialogContentText>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={handleClose} color="primary" autoFocus>
-                      확인
-                    </Button>
-                  </DialogActions>
-                </Dialog>
-                  </div>
+                  //setAlert2(true);
+                 
                 }
     }
 
@@ -279,6 +286,9 @@ const Booking = () => {
                             timeOpen={timeOpen}
                             timeClose={timeClose}
                             text={"이용하실 시간을 선택해주세요"}
+                            changeTime = {changeTime}
+                            ReserveOK = {ReserveOK} 
+                            seat={SelectedSeat}
                             />
                             <Container>
                                 <Row>
