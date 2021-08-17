@@ -1,111 +1,81 @@
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt'); 
-const saltRounds = 10; // salt를 이용하여 암호화를 할 것. saltRounds를 salt의 자릿수를 말함
-const jwt = require('jsonwebtoken'); 
+const jwt = require('jsonwebtoken');
+const { isEmail } = require('validator');
 
 const userSchema = mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: [true, '이름을 입력해주세요']
   },
   email: {
     type: String,
     required: true,
     unique: true,
-    trim: true // 공백 제거
+    trim: true, // 공백 제거
+    validate: [isEmail, '이메일이 형식이 아닙니다']
   },
   password: {
     type: String,
-    required: true,
+    required: [true, '비밀번호를 입력해주세요'],
     trim: true,
+    minlength: [8, '비밀번호는 최소 8자리 이상이어야 합니다']
+  },
+  phone: {
+    type: String,
+    required: [true, '휴대폰 번호를 입력해주세요'],
+    trim: true,
+    minlength: [10, '휴대폰 번호는 10 ~ 11 자리이어야 합니다'],
+    maxlength: [11, '휴대폰 번호는 10 ~ 11 자리이어야 합니다']
   },
   createdAt: {
     type: Date,
     default: Date.now
   },
-  loginCnt: {
+  money: {
     type: Number,
     default: 0
-  },
-  lockYn: {
-    type: Boolean,
-    default: false
   },
   role: {
     type: Number,
     default: 0
-  },
-  token: {
-    type: String
-  },
-  tokenExp: {
-    type: Number
   }
 });
 
 // mongoose에서 가져온 method, 'save' 라는 동작 이전에 어떠한 동작을 한다고 적어놓는 것
 // 해당 동작이 끝난 후 다시 save 로 돌아가서 작업 진행
-userSchema.pre('save', function(next){
+userSchema.pre('save', async function (next) {
   const user = this;
 
+  // 일반적인 user정보를 수정할 때마다 암호화가 작동할 필요는 없으므로
   // 비밀번호에 변경사항이 있을 때에만 암호화가 동작하도록 if문 작성
   if (user.isModified('password')){
-    // salt를 이용한 비밀번호 암호화
-    bcrypt.genSalt(saltRounds, function(err, salt){
-      if (err) return next(err); // error 발생시 바로 app.post(/register)로 보내기
-      bcrypt.hash(user.password, salt, function(err, hash){ 
-        if (err) return next(err);
-        user.password = hash;
-        next(); // 정상적으로 암호화가 끝난 후 app.post(/register)로 돌아감
-      });
-    });
+    const saltRounds = 10; // salt를 이용하여 암호화를 할 것. saltRound는 salt의 자릿수를 말함
+    const salt = await bcrypt.genSalt(saltRounds);
+    
+    user.password = await bcrypt.hash(user.password, salt);
+    next(); // 정상적으로 암호화가 끝난 후 app.post(/register)로 돌아감
   } else {
     next();
   }
 });
 
-userSchema.methods.comparePassword = function(plainPassword, callback) {
-  // 데이터베이스 상에 암호화된 비밀번호는 복호화할 수 없으므로
-  // 입력받은 비밀번호 또한 암호화하여 DB상의 비밀번호와 비교
-  bcrypt.compare(plainPassword, this.password, function(err, isMatch) {
-    if (err) callback(err);
-    // error 가 없을 경우 error는 null, isMatch 반환
-    callback(null, isMatch);
-  });
-};
+userSchema.statics.login = async function(email, password){
+  // 입력한 정보가 데이터베이스에 있는지 탐색
+  const user = await this.findOne({ email });
 
-userSchema.methods.generateToken = function(callback) {
-  // jsonwebtoken 이용하여 토큰 생성
-  const user = this;
-
-  // DB에 저장될 때 부여되는 _id로 토큰 생성, user.token에 저장
-  const token = jwt.sign(user._id.toHexString(), 'secretToken');
-  user.token = token;
-
-  // 성공적으로 토큰을 저장하면 user정보를 다시 반환
-  user.save(function(err, user) {
-    if(err) return callback(err);
-    callback(null, user);
-  });
-};
-
-userSchema.statics.findByToken = function(token, callback){
-  let user = this;
-
-  // 토큰을 복호화 decoded 에 복호화된 id가 저장될 것
-  jwt.verify(token, 'secretToken', function(err, decoded) {
-    // 토큰을 복호화하여 얻은 아이디로 user가 있는지 탐색
-    // client에서 가져온 token과 DB에 저장되어있는 token이 일치하는지 확인
-    user.findOne({"_id": decoded, "token": token}, function(err, user) {
-      if(err) return callback(err);
-      callback(null, user); // 일치한다면 user정보 반환
-    });
-  });
-};
+  //입력한 정보가 데이터베이스에 있다면, 입력한 정보와 저장되어있는 정보가 일치하는지 확인
+  if (user){
+    const auth = await bcrypt.compare(password, user.password);
+    if (auth) return user;
+    throw Error('incorrect password');
+  }
+  throw Error('incorrect email');
+}
 
 const User = mongoose.model('User', userSchema);
-module.exports = { User };
+module.exports = User;
 
 /*
   나중에 es6 로 바꿔 코딩해줘야함

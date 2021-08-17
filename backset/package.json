@@ -27,7 +27,8 @@
     "multer": "^1.4.3",
     "nodemon": "^2.0.12",
     "npm-check-updates": "^11.8.3",
-    "save": "^2.4.0"
+    "save": "^2.4.0",
+    "validator": "^13.6.0"
   },
   "bugs": {
     "url": "https://github.com/sortinghyeok/several_for_web/issues"
