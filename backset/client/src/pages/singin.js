@@ -37,20 +37,32 @@ const SignIn = () => {
             email: inputId,
             password: inputPw,
         };
-    
-        const res = await axios.post("/api/user/login", body)
-        console.log(res.data); // 콘솔 확인용, 지우셔도 되요
 
-        if (res.data.error){
+        const res = await axios.post("/api/user/login", body);
+        console.log(res.data); // 콘솔 확인용, 지우셔도 되요
+        console.log(res);
+
+        if (res.data.error) {
             console.log(`res.data.error: ${res.data}`);
-            // 에러 발생했을 때에 대해서 다른 조치 해주시면 될 것 같습니다.
+            alert("로그인 실패");
         }
 
         // 로그인 확인 후 홈페이지로 이동하도록
-        if (res.data.user){
+        if (res.data.user) {
             console.log(`res.data.user: ${res.data.user}`); // 콘솔 확인용, 지우셔도 되요
-            window.location.assign('/');
+            window.location.assign("/");
         }
+
+        //axios
+        //.post("/api/user/login", body)
+        //.then((res) => {
+        //    console.log(res);
+        //})
+        //.catch((err) => {
+        //    console.log(err);
+        //      alert("로그인 실패");
+        //});
+};
     };
 
     return (
@@ -58,18 +70,23 @@ const SignIn = () => {
             <Container1>
                 <FormWrap>
                     <Icon to="/">Study Joa</Icon>
-                    <FormContent onSubmit={onSubmitHandler}>
+                    <FormContent>
                         <Form>
                             <FormH1>Sign in to your account</FormH1>
                             <FormLabel htmFor="for">ID</FormLabel>
-                            <FormInput type="id"
+                            <FormInput
+                                type="id"
                                 value={inputId}
-                                onChange={handleInputId} required />
+                                onChange={handleInputId}
+                                required
+                            />
                             <FormLabel htmFor="for">Password</FormLabel>
-                            <FormInput type="password"
+                            <FormInput
+                                type="password"
                                 value={inputPw}
                                 onChange={handleInputPw}
-                                required />
+                                required
+                            />
                             <FormButton type="submit">로그인</FormButton>
                             <TextContainer>
                                 <Text to="findid">ID 찾기</Text>
