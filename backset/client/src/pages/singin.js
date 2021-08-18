@@ -53,16 +53,15 @@ const SignIn = () => {
             window.location.assign("/");
         }
 
-        //axios
-        //.post("/api/user/login", body)
-        //.then((res) => {
-        //    console.log(res);
-        //})
-        //.catch((err) => {
-        //    console.log(err);
-        //      alert("로그인 실패");
-        //});
-};
+        // axios
+        //     .post("/api/user/login", body)
+        //     .then((res) => {
+        //         console.log(res);
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //         alert("로그인 실패");
+        //     });
     };
 
     return (
@@ -70,7 +69,7 @@ const SignIn = () => {
             <Container1>
                 <FormWrap>
                     <Icon to="/">Study Joa</Icon>
-                    <FormContent>
+                    <FormContent onSubmit={onSubmitHandler}>
                         <Form>
                             <FormH1>Sign in to your account</FormH1>
                             <FormLabel htmFor="for">ID</FormLabel>
