@@ -1,14 +1,27 @@
 const mongoose = require('mongoose');
 const { User } = require("../models/User");
+const { Seat } = require("../models/Seat");
 
 namelist = [];
-paymentlist = [];
+seatlist = [];
 datelist = [];
 registerlist = [];
+availist = [];
 
-var paymentSum = 0;
 const indexView = (req, res, next) => {
     
+    Seat.find(function(error, docs){
+        if(error){
+            console.log('error!');
+        }
+        else{
+            docs.forEach(function(row){
+                seatlist.push(row.seatNo);        
+                datelist.push(row.endTime);     
+                availist.push(row.isAvailable);  
+            })
+        }
+    })
 
     User.find(function(error, docs){
         if(error){
@@ -17,10 +30,7 @@ const indexView = (req, res, next) => {
         else{
             docs.forEach(function(row){
                 namelist.push(row.name);  
-                paymentlist.push(row.payment);
-                paymentSum+=row.payment;
-                registerlist.push(row.createdAt); 
-                datelist.push(row.endTime);       
+                registerlist.push(row.createdAt);       
             })
         }
     })
@@ -31,14 +41,12 @@ const indexView = (req, res, next) => {
     var un3 = namelist[3];
     var un4 = namelist[4];
 
-    
+    var av0 = availist[0];
+    var av1 = availist[1];
+    var av2 = availist[2];
+    var av3 = availist[3];
+    var av4 = availist[4];
 
-    var py0 = paymentlist[0];
-    var py1 = paymentlist[1];
-    var py2 = paymentlist[2];
-    var py3 = paymentlist[3];
-    var py4 = paymentlist[4];
-   
     var dt0 = datelist[0];
     var dt1 = datelist[1];
     var dt2 = datelist[2];
@@ -53,16 +61,29 @@ const indexView = (req, res, next) => {
 
     rglast = registerlist[registerlist.length-1]
     
+    var avct = 0;
+    for (let i = 0; i < availist.length-1; i++)
+    {
+        if(availist[i] == true)
+        {
+            avct = avct + 1;
+        }
+    }
+    console.log(availist[0]);
+    console.log(avct);
+
+    var notav = 30 - avct;
+    
     //총 유저 정보 조회
     User.estimatedDocumentCount({ }, function (err, count, next) {
         console.log('there are %d users', count);
         let ct = count;
-        res.render('home',  {userCount: ct, 
+        res.render('home',  {userCount: ct, totSeats : avct, booked : notav,
             userName0 : un0, userName1 : un1, userName2 : un2, userName3 : un3, userName4 : un4,
-            payment0 : py0,  payment1 : py1,  payment2 : py2,  payment3 : py3,  payment4 : py4,
-            datelist0 : dt0, datelist1 : dt1, datelist2 : dt2, datelist3 : dt3, datelist4 : dt4,
+            avail0 : av0,  avail1 : av1,  avail2 : av2,  avail3 : av3,  avail4 : av4,
+            endtime0 : dt0, endtime1 : dt1, endtime2 : dt2, endtime3 : dt3, endtime4 : dt4,
             register0 : rg0, register1 : rg1, register2 : rg2, register3 : rg3, register4 : rg4,
-            totalPayment : paymentSum, newOne : rglast
+            newOne : rglast
         })
        
     });

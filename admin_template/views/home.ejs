@@ -18,7 +18,7 @@
                         <div class="card-body">
                         <div class="row">
                             <div class="col">
-                            <h5 class="card-title text-uppercase text-muted mb-0">회원 수(쿼리 구현 해놓음)</h5>
+                            <h5 class="card-title text-uppercase text-muted mb-0">총 회원 수</h5>
                             <span class="h2 font-weight-bold mb-0">
                                 <%=userCount%>
                                 
@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         <p class="mt-3 mb-0 text-sm">
-                            <span class="text-nowrap">총 회원 수</span>
+                            <span class="text-nowrap">TOTAL USERS</span>
                         </p>
                         </div>
                     </div>
@@ -43,8 +43,8 @@
                             <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0">신규 고객 등록일자</h5>
-                                <span class="h2 font-weight-bold mb-0"><%=rglast%></span>
+                                <h5 class="card-title text-uppercase text-muted mb-0">현재 예약된 자리 수</h5>
+                                <span class="h2 font-weight-bold mb-0"><%=booked%></span>
                                 </div>
                                 <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
@@ -65,8 +65,8 @@
                               <div class="card-body">
                               <div class="row">
                                   <div class="col">
-                                  <h5 class="card-title text-uppercase text-muted mb-0">역대 매출 총합</h5>
-                                  <span class="h2 font-weight-bold mb-0"><%=totalPayment%></span>
+                                  <h5 class="card-title text-uppercase text-muted mb-0">현재 예약가능한 자리 수</h5>
+                                  <span class="h2 font-weight-bold mb-0"><%=totSeats%></span>
                                   </div>
                                   <div class="col-auto">
                                   <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
@@ -75,7 +75,7 @@
                                   </div>
                               </div>
                               <p class="mt-3 mb-0 text-sm">                            
-                                  <span class="text-nowrap">총 매출액</span>
+                                  <span class="text-nowrap">최대 30자리</span>
                               </p>
                               </div>
                           </div>
@@ -134,12 +134,12 @@
                     <%=userName0%>
                   </th>
                   <td class="budget">
-                   <%=payment0%>
+                   <%=avail0%>
                   </td>
                   <td>
                   </td>
                   <td>
-                    <%=datelist0%>
+                    <%=endtime0%>
                   </td>
                   <td>
                     <%=register0%>
@@ -153,13 +153,13 @@
                     <%=userName1%>
                   </th>
                   <td class="budget">
-                    <%=payment1%>
+                    <%=avail1%>
                   </td>
                   <td>
                     
                   </td>
                   <td>
-                    <%=datelist1%>
+                    <%=endtime1%>
                   </td>                
                   <td>
                     <%=register1%>
@@ -173,13 +173,13 @@
                     <%=userName2%>
                   </th>
                   <td class="budget">
-                    <%=payment2%>
+                    <%=avail2%>
                   </td>
                   <td>
                    
                   </td>
                   <td>
-                    <%=datelist2%>      
+                    <%=endtime2%>      
                   </td>                 
                   <td>
                     <%=register2%>
@@ -193,14 +193,14 @@
                     <%=userName3%>
                   </th>
                   <td class="budget">
-                    <%=payment3%>
+                    <%=avail3%>
                   </td>
 
                   <td>
                     
                   </td>
                   <td>
-                    <%=datelist3%>
+                    <%=endtime3%>
                   </td>
                   <td>
                     <%=register3%>
@@ -214,13 +214,13 @@
                     <%=userName4%>
                   </th>
                   <td class="budget">
-                    <%=payment4%>
+                    <%=avail4%>
                   </td>
                   <td>
                     
                   </td>
                   <td>
-                    <%=datelist4%>
+                    <%=endtime4%>
                   </td>
                   <td>
                     <%=register4%>
