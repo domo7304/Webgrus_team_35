@@ -32,14 +32,13 @@ const SignIn = () => {
     // login 버튼 클릭 event 발생 시
     const onSubmitHandler = async (e) => {
         e.preventDefault();
-
         const body = {
             email: inputId,
             password: inputPw,
         };
 
         const res = await axios.post("/api/user/login", body);
-        console.log(res.data); // 콘솔 확인용, 지우셔도 되요
+        console.log(res.data);
         console.log(res);
 
         if (res.data.error) {
@@ -52,15 +51,15 @@ const SignIn = () => {
             window.location.assign("/");
         }
 
-        //axios
-        //.post("/api/user/login", body)
-        //.then((res) => {
-        //    console.log(res);
-        //})
-        //.catch((err) => {
-        //    console.log(err);
-        //      alert("로그인 실패");
-        //});
+        // axios
+        //     .post("/api/user/login", body)
+        //     .then((res) => {
+        //         console.log(res);
+        //     })
+        //     .catch((err) => {
+        //         console.log(err);
+        //         alert("로그인 실패");
+        //     });
     };
 
     return (
