@@ -14,14 +14,6 @@ router.post("/deleteUser", deleteUser);
 router.post("/updateUser", updateUser);
 router.post("/getAllMember", getAllUsers);
 
-//여기서부터 새로 작성한 코드입니다.
-router.get('/', (req, res) =>{
-  let name = 'Korean';
-  res.render('home', {
-    userName : name
-  });
-})
-
 module.exports = router;
 
 /*
