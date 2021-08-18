@@ -2,13 +2,16 @@ const express = require("express");
 const router = express.Router();
 
 const ctrl = require("../controller/userController");
-const { auth, checkUser } = require("../middleware/auth");
+// const { auth, checkUser } = require("../middleware/auth");
+const { auth } = require("../middleware/auth");
 
-router.get("/checkUser", checkUser, ctrl.checkUser);
+router.get("/auth", auth, ctrl.auth);
 router.get("/logout", auth, ctrl.logout);
 
 router.post("/register", ctrl.register);
 router.post("/login", ctrl.login);
+router.post("/findUserEmail", ctrl.findUserEmail);
+router.post("/changeUserPw", ctrl.changeUserPw);
 
 module.exports = router;
 

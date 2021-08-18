@@ -43,7 +43,6 @@ const SignIn = () => {
         console.log(res);
 
         if (res.data.error) {
-            console.log(`res.data.error: ${res.data}`);
             alert("로그인 실패");
         }
 
@@ -62,7 +61,6 @@ const SignIn = () => {
         //    console.log(err);
         //      alert("로그인 실패");
         //});
-};
     };
 
     return (
@@ -70,7 +68,7 @@ const SignIn = () => {
             <Container1>
                 <FormWrap>
                     <Icon to="/">Study Joa</Icon>
-                    <FormContent>
+                    <FormContent onSubmit={onSubmitHandler}>
                         <Form>
                             <FormH1>Sign in to your account</FormH1>
                             <FormLabel htmFor="for">ID</FormLabel>

@@ -1,4 +1,3 @@
-
 const User = require("../models/User");
 const jwt = require('jsonwebtoken');
 
@@ -31,19 +30,19 @@ const handleErrors = (err) => {
 }
 
 const createToken = (id) => {
-  return jwt.sign({ id }, 'secretToken'), {
-    expiresIn: 30 // 일단 만료시간을 20s로 설정, 추후 변경
-  }
+  return jwt.sign({ id }, 'secretToken', {
+    expiresIn: 24 * 60 * 60 * 1000 // 토큰 유효기간은 1일로 설정
+  });
 }
 
 //----------이 아래부터 기능부------------//
 
-const checkUser = (req, res) => {
-  // middleware/auth의 checkUser를 지나오며 user정보를 가져옴
+const auth = (req, res) => {
+  // middleware/auth의 auth를 지나오며 user정보를 가져옴
   if (req.user != null){
     res.status(200).json({
       _id: req.user._id,
-      isAdmin: req.user.role === 0 ? false : true, // 임시적으로 role이 1인 user가 admin이 되도록 작성해놓은 것
+      isAdmin: req.user.role === 0 ? false : true, // 임시적으로 role이 1인 user가 admin이 되도록 작성
       isAuth: true,
       name: req.user.name,
       email: req.user.email,
@@ -51,12 +50,15 @@ const checkUser = (req, res) => {
       role: req.user.role
     });
   } else {
-    res.json({ loginState: false });
+    res.json({ isAuth: false });
   }
 };
 
 const logout = async (req, res) => {
   res.cookie('jwt', '', { maxAge: 1 });
+  res.status(201).json({
+    logoutSuccess: true
+  });
 };
 
 const register = async (req, res) => {
@@ -64,7 +66,7 @@ const register = async (req, res) => {
     // new User(req.body).save() 와 같은 동작
     const user = await User.create(req.body);
     const token = createToken(user._id);
-    res.cookie('jwt', token, {maxAge: 3 * 10 * 1000});
+    res.cookie('jwt', token, {maxAge: 10 * 60 * 1000});
     res.status(201).json({
       registerSuccess: true
     });
@@ -79,7 +81,7 @@ const login = async (req, res) => {
   try{
     const user = await User.login(req.body.email, req.body.password);
     const token = createToken(user._id);
-    res.cookie('jwt', token, {maxAge: 30 * 1000});
+    res.cookie('jwt', token, {maxAge: 10 * 60 * 1000});
     res.status(200).json({ user: user._id });
   }
   catch(err){
@@ -88,15 +90,53 @@ const login = async (req, res) => {
   }
 };
 
-// const findUserEmail = async (req, res) => {
-//   try {
-//     const user = await User.find
-//   }
-// }
+const findUserEmail = async (req, res) => {
+  try {
+    const user = await User.findOne({ name: req.body.name, phone: req.body.phone });
+    res.status(200).json({ email: user.email });
+  }
+  catch(err){
+    res.json({ msg: '등록되지 않은 회원입니다' });
+  }
+};
+
+const changeUserPw = async (req, res) => {
+  // try {
+  //   const filter = { name: req.body.name, email: req.body.email, phone: req.body.phone };
+  //   const update = { password: req.body.password };
+  //   const user = await User.findOneAndUpdate(filter, update);
+  //   console.log(user);
+  //   await user.save();
+  //   res.status(200).json({ msg: '비밀번호가 성공적으로 변경되었습니다' });
+  // }
+  // catch(err){
+  //   console.log(err.message);
+  //   res.json({ msg: '등록되지 않은 회원입니다' });
+  // }
+
+  const user = await User.findOne({ name: req.body.name, email: req.body.email, phone: req.body.phone });
+
+  User.findByIdAndUpdate({_id: user._id}, { password: req.body.password }, function (err, user) {
+    if (err) {
+      return next(err);
+    } else {
+      user.password = req.body.password;
+      user.save(function (err, user) {
+        if (err) {
+          res.send("Error: ", err);
+        } else {
+          res.send("password updated successfully!");
+        }
+      });
+    }
+  });
+};
 
 module.exports = {
-  checkUser,
+  auth,
   logout,
   register,
-  login
+  login,
+  findUserEmail,
+  changeUserPw
 };

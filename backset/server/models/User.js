@@ -1,7 +1,6 @@
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt'); 
-const jwt = require('jsonwebtoken');
 const { isEmail } = require('validator');
 
 const userSchema = mongoose.Schema({
@@ -34,6 +33,10 @@ const userSchema = mongoose.Schema({
     default: Date.now
   },
   money: {
+    type: Number,
+    default: 0
+  },
+  time: {
     type: Number,
     default: 0
   },
