@@ -43,7 +43,6 @@ const SignIn = () => {
         console.log(res);
 
         if (res.data.error) {
-            console.log(`res.data.error: ${res.data}`);
             alert("로그인 실패");
         }
 
@@ -53,15 +52,15 @@ const SignIn = () => {
             window.location.assign("/");
         }
 
-        // axios
-        //     .post("/api/user/login", body)
-        //     .then((res) => {
-        //         console.log(res);
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //         alert("로그인 실패");
-        //     });
+        //axios
+        //.post("/api/user/login", body)
+        //.then((res) => {
+        //    console.log(res);
+        //})
+        //.catch((err) => {
+        //    console.log(err);
+        //      alert("로그인 실패");
+        //});
     };
 
     return (
