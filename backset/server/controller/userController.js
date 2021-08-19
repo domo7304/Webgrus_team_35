@@ -1,6 +1,5 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
-const { ConnectionClosedEvent } = require("mongodb");
 
 const handleErrors = (err) => {
     let error = { name: "", email: "", password: "" };
@@ -89,6 +88,12 @@ const login = async (req, res) => {
     }
 };
 
+const checkEmail = async (req, res) => {
+  const user = await User.findOne({ email: req.body.email });
+  if (user) res.json({ isDuplicated: true });
+  else res.json({ isDuplicated: false });  
+};
+
 const findUserEmail = async (req, res) => {
     try {
         const user = await User.findOne({
@@ -133,7 +138,7 @@ const changeUserPw = async (req, res) => {
                     if (err) {
                         res.send("Error: ", err);
                     } else {
-                        res.send("password updated successfully!");
+                        res.send("비밀번호가 성공적으로 변경되었습니다");
                     }
                 });
             }
@@ -146,6 +151,7 @@ module.exports = {
     logout,
     register,
     login,
+    checkEmail,
     findUserEmail,
     changeUserPw,
 };
