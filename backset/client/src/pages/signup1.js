@@ -59,6 +59,7 @@ const SignUp1 = () => {
     }; //나중에 custom hook 활용하여 묶기
 
     const onSubmitHandler = async (e) => {
+        e.preventDefault();
         const body = {
             name: inputName,
             email: inputId,
@@ -66,13 +67,11 @@ const SignUp1 = () => {
             phone: inputPhone,
         };
 
-        // console.log(
-        //     `${body.name} ${body.email} ${body.password} ${body.phone}`
-        // );
+        // console.log( `${body.name} ${body.email} ${body.password} ${body.phone}`);
 
         if (inputPw != inputPwRe) alert("비밀번호가 일치하지 않습니다");
 
-        axios
+        await axios
             .post("/api/user/register", body)
             .then((res) => {
                 console.log(res);
@@ -87,8 +86,8 @@ const SignUp1 = () => {
             <Container1>
                 <FormWrap>
                     <Icon to="/">Study Joa</Icon>
-                    <FormContent>
-                        <Form action="#" onSubmit={onSubmitHandler}>
+                    <FormContent onSubmit={onSubmitHandler}>
+                        <Form>
                             <FormH1>회원 가입</FormH1>
                             <FormLabel htmFor="for">ID</FormLabel>
                             <IDContainer>
