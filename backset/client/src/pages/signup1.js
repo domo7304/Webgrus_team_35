@@ -36,7 +36,7 @@ const SignUp1 = () => {
     const [inputPw, setInputPw] = useState("");
     const [inputPwRe, setInputPwRe] = useState("");
     const [inputPhone, setInputPhone] = useState("");
-    const [inputEmail, setInputEmail] = useState(""); //?
+    // const [inputEmail, setInputEmail] = useState(""); //?
     const [inputName, setInputName] = useState("");
 
     const handleInputId = (e) => {
@@ -51,9 +51,9 @@ const SignUp1 = () => {
     const handleInputPhone = (e) => {
         setInputPhone(e.target.value);
     };
-    const handleInputEmail = (e) => {
-        setInputEmail(e.target.value);
-    };
+    // const handleInputEmail = (e) => {
+    //     setInputEmail(e.target.value);
+    // };
     const handleInputName = (e) => {
         setInputName(e.target.value);
     }; //나중에 custom hook 활용하여 묶기
@@ -89,7 +89,7 @@ const SignUp1 = () => {
                     <FormContent onSubmit={onSubmitHandler}>
                         <Form>
                             <FormH1>회원 가입</FormH1>
-                            <FormLabel htmFor="for">ID</FormLabel>
+                            <FormLabel htmFor="for">Email</FormLabel>
                             <IDContainer>
                                 <FormInput
                                     type="ID"
@@ -119,7 +119,10 @@ const SignUp1 = () => {
                                 value={inputPhone}
                                 onChange={handleInputPhone}
                                 required
-                            />
+                            /> 
+                            {/* 
+                            저희 웹페이지 이용하는데 id는 따로 안쓰고 이메일만 쓸 것 같아서 
+                            이 부분 주석처리 하고 위에 formlabel 'ID'를 'Email'로 바꾸었습니다! -도원-
                             <FormLabel htmFor="for">이메일</FormLabel>
                             <IDContainer>
                                 <FormInput
@@ -129,7 +132,7 @@ const SignUp1 = () => {
                                     required
                                 />
                                 <CheckButton>이메일 인증</CheckButton>
-                            </IDContainer>
+                            </IDContainer> */}
                             <FormLabel htmFor="for">이름</FormLabel>
                             <FormInput
                                 type="name"
