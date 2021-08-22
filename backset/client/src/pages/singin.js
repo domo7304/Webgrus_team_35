@@ -42,7 +42,22 @@ const SignIn = () => {
         console.log(res);
 
         if (res.data.error) {
-            alert("로그인 실패");
+            console.log(res.data.error);
+            console.log(res.data.error.email);
+            console.log(res.data.error.password);
+            if (
+                JSON.stringify(res.data.error.email).replace(/\"/gi, "") != ""
+            ) {
+                alert(JSON.stringify(res.data.error.email).replace(/\"/gi, ""));
+            }
+            if (
+                JSON.stringify(res.data.error.password).replace(/\"/gi, "") !=
+                ""
+            ) {
+                alert(
+                    JSON.stringify(res.data.error.password).replace(/\"/gi, "")
+                );
+            }
         }
 
         // 로그인 확인 후 홈페이지로 이동하도록
@@ -70,7 +85,7 @@ const SignIn = () => {
                     <FormContent onSubmit={onSubmitHandler}>
                         <Form>
                             <FormH1>Sign in to your account</FormH1>
-                            <FormLabel htmFor="for">ID</FormLabel>
+                            <FormLabel htmFor="for">Email</FormLabel>
                             <FormInput
                                 type="id"
                                 value={inputId}

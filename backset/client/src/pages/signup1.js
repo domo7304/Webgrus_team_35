@@ -32,6 +32,10 @@ import {
 } from "./signElement";
 
 const SignUp1 = () => {
+    let checker = {
+        emailChecker: false,
+        pwChecker: false,
+    };
     const [inputId, setInputId] = useState("");
     const [inputPw, setInputPw] = useState("");
     const [inputPwRe, setInputPwRe] = useState("");
@@ -58,6 +62,27 @@ const SignUp1 = () => {
         setInputName(e.target.value);
     }; //나중에 custom hook 활용하여 묶기
 
+    const checkEmail = async (e) => {
+        e.preventDefault();
+        const body = { email: inputId };
+        fetch("/api/user/checkEmail", {
+            method: "post",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(`${data.isDuplicated}`);
+                if (data.isDuplicated == true) {
+                    //true 이미 있는 이메일, false 가입 가능
+                    alert("이미 사용 중인 이메일입니다.");
+                } else {
+                    alert("사용 가능한 이메일입니다.");
+                    checker.emailChecker = true;
+                }
+            });
+    };
+
     const onSubmitHandler = async (e) => {
         e.preventDefault();
         const body = {
@@ -69,16 +94,92 @@ const SignUp1 = () => {
 
         // console.log( `${body.name} ${body.email} ${body.password} ${body.phone}`);
 
-        if (inputPw != inputPwRe) alert("비밀번호가 일치하지 않습니다");
+        if (inputPw == inputPwRe) {
+            checker.pwChecker = true;
+        } else {
+            alert("비밀번호가 일치하지 않습니다");
+        }
 
-        await axios
-            .post("/api/user/register", body)
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        if (checker.emailChecker == false) {
+            alert("이메일 중복 확인이 필요합니다");
+        }
+
+        if ((checker.pwChecker && checker.emailChecker) == true) {
+            // await axios
+            //     .post("/api/user/register", body)
+            //     .then((res) => res.json())
+            //     .then((data) => {
+            //         console.log(data.registerSuccess);
+            //         alert(
+            //             "회원가입이 정상적으로 완료되었습니다. 로그인 페이지로 이동합니다"
+            //         );
+            //         window.location.assign("/login");
+            //     });
+
+            const res = await axios.post("/api/user/register", body);
+
+            if (res.data.user) {
+                console.log(`res.data.user: ${res.data.user}`); // 콘솔 확인용, 지우셔도 되요
+                window.location.assign("/");
+            } else if (res.data.error) {
+                // console.log(res.data.error);
+                // console.log(res.data.error.email);
+                // console.log(res.data.error.password);
+                // console.log(res.data.error.phone);
+                // console.log(res.data.error.name);
+                if (
+                    JSON.stringify(res.data.error.email).replace(/\"/gi, "") !=
+                    ""
+                ) {
+                    alert(
+                        JSON.stringify(res.data.error.email).replace(/\"/gi, "")
+                    );
+                }
+                if (
+                    JSON.stringify(res.data.error.password).replace(
+                        /\"/gi,
+                        ""
+                    ) != ""
+                ) {
+                    alert(
+                        JSON.stringify(res.data.error.password).replace(
+                            /\"/gi,
+                            ""
+                        )
+                    );
+                }
+                if (
+                    JSON.stringify(res.data.error.phone).replace(/\"/gi, "") !=
+                    ""
+                ) {
+                    alert(
+                        JSON.stringify(res.data.error.phone).replace(/\"/gi, "")
+                    );
+                }
+                if (
+                    JSON.stringify(res.data.error.name).replace(/\"/gi, "") !=
+                    ""
+                ) {
+                    alert(
+                        JSON.stringify(res.data.error.name).replace(/\"/gi, "")
+                    );
+                }
+                if (
+                    JSON.stringify(res.data.error.name).replace(/\"/gi, "") ==
+                        "" &&
+                    JSON.stringify(res.data.error.phone).replace(/\"/gi, "") ==
+                        "" &&
+                    JSON.stringify(res.data.error.email).replace(/\"/gi, "") ==
+                        "" &&
+                    JSON.stringify(res.data.error.password).replace(
+                        /\"/gi,
+                        ""
+                    ) == ""
+                ) {
+                    window.location.assign("/");
+                }
+            }
+        }
     };
 
     return (
@@ -97,9 +198,13 @@ const SignUp1 = () => {
                                     onChange={handleInputId}
                                     requiredrequired
                                 />
-                                <CheckButton>중복확인</CheckButton>
+                                <CheckButton onClick={checkEmail}>
+                                    중복확인
+                                </CheckButton>
                             </IDContainer>
-                            <FormLabel htmFor="for">PW</FormLabel>
+                            <FormLabel htmFor="for">
+                                PW * 최소 8자리 이상
+                            </FormLabel>
                             <FormInput
                                 type="PW"
                                 value={inputPw}
@@ -113,13 +218,15 @@ const SignUp1 = () => {
                                 onChange={handleInputPwRe}
                                 required
                             />
-                            <FormLabel htmFor="for">휴대폰 번호</FormLabel>
+                            <FormLabel htmFor="for">
+                                휴대폰 번호 * 10~11자리{" "}
+                            </FormLabel>
                             <FormInput
                                 type="phone"
                                 value={inputPhone}
                                 onChange={handleInputPhone}
                                 required
-                            /> 
+                            />
                             {/* 
                             저희 웹페이지 이용하는데 id는 따로 안쓰고 이메일만 쓸 것 같아서 
                             이 부분 주석처리 하고 위에 formlabel 'ID'를 'Email'로 바꾸었습니다! -도원-

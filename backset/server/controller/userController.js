@@ -2,7 +2,7 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 
 const handleErrors = (err) => {
-    let error = { name: "", email: "", password: "" };
+    let error = { name: "", email: "", password: "", phone: "" };
 
     // 잘못된 이메일
     if (err.message === "incorrect email") {
@@ -15,10 +15,10 @@ const handleErrors = (err) => {
     }
 
     // 중복 가입 에러
-    if (err.code === 11000) {
-        error.email = "이미 존재하는 계정입니다";
-        return error;
-    }
+    // if (err.code === 11000) {
+    //     error.email = "이미 존재하는 계정입니다";
+    //     return error;
+    // }
 
     // 이름, 비밀번호, 휴대폰 번호, 이메일 형식 에러 등
     if (err.message.includes("User validation failed")) {
@@ -72,7 +72,7 @@ const register = async (req, res) => {
         });
     } catch (err) {
         const error = handleErrors(err);
-        res.status(400).json({ error });
+        res.json({ error });
     }
 };
 
@@ -89,9 +89,9 @@ const login = async (req, res) => {
 };
 
 const checkEmail = async (req, res) => {
-  const user = await User.findOne({ email: req.body.email });
-  if (user) res.json({ isDuplicated: true });
-  else res.json({ isDuplicated: false });  
+    const user = await User.findOne({ email: req.body.email });
+    if (user) res.json({ isDuplicated: true });
+    else res.json({ isDuplicated: false });
 };
 
 const findUserEmail = async (req, res) => {

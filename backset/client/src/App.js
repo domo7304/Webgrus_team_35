@@ -15,6 +15,7 @@ import SignUp1 from "./pages/signup1";
 import BoardForm from "./BoardForm";
 import Booking from "./components/Booking";
 import Board from "./Board";
+import MypageForm from "./MypageForm";
 
 function App() {
     return (
@@ -28,6 +29,7 @@ function App() {
                     <Route path="/findpw" exact component={FindPW1} />
                     <Route path="/board" exact component={Board} />
                     <Route path="/book" exact component={Booking} />
+                    <Route path="/mypage" exact component={MypageForm} />
                 </Switch>
             </Router>
         </div>

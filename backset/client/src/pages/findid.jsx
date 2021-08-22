@@ -39,65 +39,64 @@ export default function FindID() {
 
     return (
         <Container1>
-        
-        <Icon to="/">Study Joa</Icon>
-        <Container component="main" maxWidth="xs">
-            <CssBaseline />
-            <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    ID 찾기
-                </Typography>
-                <form className={classes.form} noValidate>
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="name"
-                        label="이름"
-                        name="name"
-                        autoComplete="name"
-                        autoFocus
-                    />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="phone"
-                        label="휴대폰 번호"
-                        type="phone"
-                        id="phone"
-                        autoComplete="phone"
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
+            <Icon to="/">Study Joa</Icon>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
                         ID 찾기
-                    </Button>
-                    <Grid container>
-                        <Grid item xs>
-                            <Link href="/findpw" variant="body2">
-                                PW 찾기
-                            </Link>
+                    </Typography>
+                    <form className={classes.form} noValidate>
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="name"
+                            label="이름"
+                            name="name"
+                            autoComplete="name"
+                            autoFocus
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="phone"
+                            label="휴대폰 번호"
+                            type="phone"
+                            id="phone"
+                            autoComplete="phone"
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            ID 찾기
+                        </Button>
+                        <Grid container>
+                            <Grid item xs>
+                                <Link href="/findpw" variant="body2">
+                                    PW 찾기
+                                </Link>
+                            </Grid>
+                            <Grid item>
+                                <Link href="/login" variant="body2">
+                                    {"로그인 화면으로 이동"}
+                                </Link>
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                            <Link href="/login" variant="body2">
-                                {"로그인 화면으로 이동"}
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </form>
-            </div>
-            <Box mt={8}></Box>
-        </Container>
+                    </form>
+                </div>
+                <Box mt={8}></Box>
+            </Container>
         </Container1>
     );
 }
