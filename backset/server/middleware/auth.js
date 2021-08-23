@@ -23,46 +23,6 @@ const auth = (req, res, next) => {
     res.user = null;
     next();
   }
-  
-  // const token = req.cookies.jwt;
-
-  // if (token){
-  //   jwt.verify(token, 'secretToken', (err, decodedToken) => {
-  //     if (err){
-  //       console.log(err.message);
-  //       next();
-  //     } else {
-  //       console.log(decodedToken);
-  //       next();
-  //     }
-  //   });
-  // } else {
-  //   next();
-  // }
 }
 
-// const checkUser = (req, res, next) => {
-//   const token = req.cookies.jwt;
-
-//   if (token){
-//     jwt.verify(token, 'secretToken', async (err, decodedToken) => {
-//       if (err){
-//         req.user = null;
-//         next();
-//       } else {
-//         let user = await User.findById(decodedToken.id);
-//         req.user = user;
-//         next();
-//       }
-//     });
-//   } else {
-//     console.log(`사용자 정보가 존재하지 않습니다`);
-//     res.user = null;
-//     next();
-//   }
-// }
-
-module.exports = { 
-  auth,
-  //checkUser
-};
+module.exports = { auth };

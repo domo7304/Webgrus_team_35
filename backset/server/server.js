@@ -8,7 +8,7 @@ const temp = require('./routes/bookingRouter');
 
 // 라우터 경로 설정
 const boardRouter = require('./routes/boardRouter');
-bookingRouter = temp.router;
+const bookingRouter = temp.router;
 const userRouter = require('./routes/userRouter');
 
 // 미들웨어 사용 등록

@@ -15,10 +15,10 @@ const handleErrors = (err) => {
     }
 
     // 중복 가입 에러
-    // if (err.code === 11000) {
-    //     error.email = "이미 존재하는 계정입니다";
-    //     return error;
-    // }
+    if (err.code === 11000) {
+        error.email = "이미 존재하는 계정입니다";
+        return error;
+    }
 
     // 이름, 비밀번호, 휴대폰 번호, 이메일 형식 에러 등
     if (err.message.includes("User validation failed")) {
@@ -119,6 +119,7 @@ const changeUserPw = async (req, res) => {
     //   console.log(err.message);
     //   res.json({ msg: '등록되지 않은 회원입니다' });
     // }
+    // 콜백함수를 await을 쓰도록 좀 바꿔보고 싶음..
 
     const user = await User.findOne({
         name: req.body.name,
