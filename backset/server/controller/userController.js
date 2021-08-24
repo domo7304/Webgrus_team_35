@@ -119,7 +119,8 @@ const changeUserPw = async (req, res) => {
     //   console.log(err.message);
     //   res.json({ msg: '등록되지 않은 회원입니다' });
     // }
-    // 콜백함수를 await을 쓰도록 좀 바꿔보고 싶음..
+
+    // 보기 편하게 async await으로 쓰고 싶은데 아직 해결을 못해서 아래와 같이 남겨두었습니다...
 
     const user = await User.findOne({
         name: req.body.name,

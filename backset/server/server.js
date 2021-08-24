@@ -12,11 +12,11 @@ const bookingRouter = temp.router;
 const userRouter = require('./routes/userRouter');
 
 // 미들웨어 사용 등록
-app.use(express.json()); //json데이터를 주고 받기 위해 사용
-app.use(express.urlencoded({ extended: true })); //배열과 같은 것들을 받아오기 위함
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/api/board", boardRouter);
-app.use("/api/book", bookingRouter); //여기 /api/book으로
+app.use("/api/book", bookingRouter);
 app.use("/api/user", userRouter); 
 
 // mongoDB 연결

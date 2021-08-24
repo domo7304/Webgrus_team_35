@@ -78,35 +78,3 @@ userSchema.statics.login = async function (email, password) {
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;
-
-/*
-  나중에 es6 로 바꿔 코딩해줘야함
-
-  export const postLogin = async (req, res) => {
-    ...생략
-
-    try {
-        const token = await BlogUser.generateToken(user);
-        user.token = token;
-        user.save();
-        return res
-            .status(200)
-            .cookie("x_auth", user.token)
-            .json({
-                loginSuccess: true,
-                userId: user._id,
-                message: "로그인 성공"
-            });
-    } catch (err) {
-        return res.status(400).json({
-            loginSuccess: false,
-            message: "토큰 생성 실패"
-        });
-    }
-};
--------------------------------------------------------------------------------------
-//User.js
-userSchema.static("generateToken", function (user) {
-    return jwt.sign(user._id.toHexString(), "secretToken");
-})
-*/
